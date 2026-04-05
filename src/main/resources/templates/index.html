@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/base :: layout('Flower Care', '', ~{::main})}">
+
+<main class="hero">
+    <section class="hero-panel">
+        <div class="hero-left">
+            <h1 class="hero-title">Flower Care</h1>
+
+            <p class="hero-subtitle">
+                A little reminder, a lot of bloom
+            </p>
+
+            <div class="alert ok" th:if="${param.logout}">Вы вышли из аккаунта.</div>
+
+            <div sec:authorize="isAnonymous()" class="hero-actions">
+                <a class="btn btn-primary" th:href="@{/auth/register}">Создать аккаунт</a>
+                <a class="btn btn-ghost" th:href="@{/auth/login}">Войти</a>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" class="hero-actions">
+                <a class="btn btn-primary" th:href="@{/app}">Перейти в кабинет</a>
+                <a class="btn btn-ghost" th:href="@{/app/species}">Каталог видов</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <img class="hero-photo" th:src="@{/images/flat.jpg}" alt="Plants"/>
+        </div>
+    </section>
+</main>
+
+</html>

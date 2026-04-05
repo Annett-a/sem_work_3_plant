@@ -1,0 +1,19 @@
+<footer class="footer" xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
+    <div class="footer__inner">
+        <div class="footer__brand">
+            <div class="footer__title">Flower Care</div>
+            <div class="footer__subtitle">Умный уход за растениями: проще, понятнее, регулярнее.</div>
+        </div>
+
+        <div class="footer__cta">
+            <div class="footer__note">Создай аккаунт и добавь первое растение за минуту.</div>
+            <a class="btn btn-primary btn-inline" th:href="@{/auth/register}">Попробовать сейчас</a>
+        </div>
+    </div>
+
+    <div class="footer__bottom">
+        <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Flower Care</span>
+        <span class="footer__dot">•</span>
+        <span class="texd"> Annett-a</span>
+    </div>
+</footer>

@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME:-sem3}
+      POSTGRES_USER: ${DB_USER:-sem3}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-sem3}
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-sem3} -d ${DB_NAME:-sem3}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME:-sem3}
+      DB_USER: ${DB_USER:-sem3}
+      DB_PASSWORD: ${DB_PASSWORD:-sem3}
+
+      PERENUAL_API_KEY: ${PERENUAL_API_KEY:-}
+
+      PLANTNET_API_KEY: ${PLANTNET_API_KEY:-}
+      PLANTNET_PROJECT: ${PLANTNET_PROJECT:-all}
+
+      # чтобы фото сохранялись в volume, а не внутри контейнера
+      APP_STORAGE_DIR: /app/data
+    ports:
+      - "8091:8080"
+    volumes:
+      - app_data:/app/data
+
+volumes:
+  db_data:
+  app_data:

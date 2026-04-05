@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:fragment="layout(title, bodyClass, content)">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Этап 6.3 (P0): CSRF для AJAX -->
+    <meta name="_csrf" th:content="${_csrf == null ? '' : _csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf == null ? '' : _csrf.headerName}"/>
+
+    <title th:text="${title}">Flower Care</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+    <!-- общий helper для всех AJAX -->
+    <script th:src="@{/js/csrf.js}" defer></script>
+</head>
+<body th:class="${bodyClass}">
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<!-- ВАЖНО: не оборачиваем в ещё один <main>, чтобы не ломать текущую верстку страниц -->
+<div th:replace="${content}"></div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

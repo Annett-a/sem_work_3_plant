@@ -1,0 +1,2740 @@
+:root {
+    --bg: #2F3E34; /* тёмный мох — фон */
+    --card: #3A4A3F; /* чуть светлее мха для карточек */
+    --text: #E5E7E0; /* известняк — основной текст */
+    --muted: #DCE6DA; /* шалфей — вторичный текст */
+    --border: #4B5D50; /* границы */
+    --accent: #5F7A61; /* хвоя — акцент */
+    --danger: #EF4444; /* можно оставить красный */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.22)),
+    url("../images/back.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 18px;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.06);
+    backdrop-filter: blur(14px);
+}
+
+.nav a {
+    color: var(--text);
+    text-decoration: none;
+    margin-right: 12px;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.card {
+    border: 1px solid rgba(229, 231, 224, 0.14);
+    background: rgba(58, 74, 63, 0.72);
+    border-radius: 22px;
+    padding: 28px;
+    margin-top: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.30),
+    0 2px 0 rgba(229, 231, 224, 0.04) inset;
+}
+
+/* чтобы карточка читалась на фоне страницы с картинкой */
+body.auth-bg .card {
+    background: rgba(58, 74, 63, 0.85);
+    border-color: rgba(75, 93, 80, 0.75);
+    backdrop-filter: blur(6px);
+}
+
+.form-row {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.04);
+    color: var(--text);
+    font: inherit;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgba(229, 231, 224, 0.06);
+    color: var(--text);
+    color-scheme: dark;
+}
+
+select option,
+select optgroup {
+    background: #5f6d61;
+    color: #f3f6ef;
+}
+
+select option:checked,
+select option:focus,
+select option:hover {
+    background: #708173;
+    color: #ffffff;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(220, 230, 218, 0.72);
+}
+
+button {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.04);
+    color: var(--text);
+    cursor: pointer;
+    font: inherit;
+}
+
+button.primary {
+    border-color: rgba(95, 122, 97, 0.7);
+    background: rgba(95, 122, 97, 0.35);
+}
+
+.alert {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+.alert.error {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+.alert.ok {
+    border-color: rgba(34, 197, 94, 0.45);
+}
+
+.error-text {
+    color: #fca5a5;
+    font-size: 13px;
+    margin-top: 6px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    background: rgba(229, 231, 224, 0.04);
+    transition: transform .05s ease, background .15s ease, border-color .15s ease;
+}
+
+.btn:hover {
+    background: rgba(229, 231, 224, 0.08);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: rgba(95, 122, 97, 0.35);
+    border-color: rgba(95, 122, 97, 0.75);
+}
+
+.btn-primary:hover {
+    background: rgba(95, 122, 97, 0.45);
+}
+
+.btn-ghost {
+    background: transparent;
+}
+
+.btn-ghost:hover {
+    background: rgba(229, 231, 224, 0.06);
+}
+
+/* HERO: большая плашка почти на весь экран */
+.hero {
+    flex: 1 0 auto;
+    display: grid;
+    place-items: center;
+    padding: 36px 18px;
+}
+
+/* полупрозрачная “плашка”, но фон виден */
+.hero-panel {
+    width: min(1200px, 94vw);
+    min-height: 72vh;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr; /* правой (картинке) больше места */
+    gap: 16px;
+    align-items: center;
+
+    padding: 44px;
+    border-radius: 46px;
+
+    /* стекло + мягкая моховая подложка */
+    background: rgba(58, 74, 63, 0.55);
+    border: 1px solid rgba(229, 231, 224, 0.14);
+    backdrop-filter: blur(18px) saturate(130%);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35),
+    0 2px 0 rgba(229, 231, 224, 0.06) inset;
+}
+
+/* чуть “органичнее”, как на референсе (не прямоугольник) */
+.hero-panel {
+    border-radius: 46px;
+}
+
+.hero-left {
+    max-width: 520px;
+    padding-left: 110px; /* текст не расползается по всей колонке */
+}
+
+/* левая часть */
+.hero-title {
+    margin: 0;
+    letter-spacing: 0.2px;
+    font-size: 56px; /* крупнее как на референсе */
+    line-height: 1.02;
+}
+
+.hero-subtitle {
+    color: rgba(229, 231, 224, 0.88);
+    margin-top: 14px;
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 42ch;
+}
+
+.hero-actions {
+    margin-top: 18px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* правая часть: фото */
+.hero-right {
+    display: flex;
+    justify-content: center;
+}
+
+.hero-photo {
+    width: min(460px, 100%);
+    height: min(560px, 60vh);
+    object-fit: cover;
+    border-radius: 26px;
+
+    /* рамка-паспарту */
+    background: rgba(229, 231, 224, 0.12);
+    padding: 14px; /* создаёт белёсое поле вокруг картинки */
+    box-sizing: border-box;
+
+    border: 1px solid rgba(229, 231, 224, 0.16);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+    /* сдвигаем левее, чтобы "заполнить" пустоту */
+    transform: translateX(-18px);
+}
+
+/* адаптив: на телефоне картинка вниз */
+@media (max-width: 900px) {
+    .hero-panel {
+        grid-template-columns: 1fr;
+        padding: 28px;
+        min-height: auto;
+    }
+
+    .hero-right {
+        justify-content: center;
+    }
+
+    .hero-photo {
+        height: 360px;
+        width: 100%;
+    }
+
+    .hero-left {
+        padding-left: 0;
+    }
+}
+
+/* чтобы карточка читалась на фоне */
+body.auth-bg .card {
+    background: rgba(58, 74, 63, 0.85);
+    border-color: rgba(75, 93, 80, 0.75);
+    backdrop-filter: blur(6px);
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+
+    /* как у .nav */
+    background: rgba(229, 231, 224, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.footer__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.footer__brand {
+    min-width: 240px;
+}
+
+.footer__title {
+    font-weight: 800;
+    letter-spacing: .2px;
+    font-size: 18px;
+}
+
+.footer__subtitle {
+    margin-top: 6px;
+    color: var(--text);
+    line-height: 1.4;
+    max-width: 44ch;
+}
+
+.footer__cta {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: right;
+}
+
+.footer__note {
+    color: var(--text);
+    line-height: 1.35;
+    max-width: 34ch;
+}
+
+.footer__bottom {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 12px 18px 18px 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    font-size: 13px;
+}
+
+.footer__dot {
+    opacity: .6;
+    color: var(--text);
+}
+
+@media (max-width: 760px) {
+    .footer__inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer__cta {
+        width: 100%;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .footer__note {
+        max-width: none;
+    }
+}
+
+/* ===== AUTH PAGES (login/register) ===== */
+/* === ровная сетка для login/register === */
+.auth {
+    flex: 1 0 auto;
+    display: grid;
+    place-items: center;
+    padding: 40px 18px;
+}
+
+.auth .card {
+    width: min(520px, 92vw);
+    padding: 34px 36px;
+    border-radius: 28px;
+}
+
+.auth .form-row {
+    margin-bottom: 14px;
+}
+
+.auth label {
+    display: block;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    letter-spacing: .2px;
+}
+
+.auth input {
+    width: 100%;
+    height: 46px; /* одинаковая высота */
+    padding: 10px 14px;
+    border-radius: 12px;
+}
+
+.auth .actions {
+    margin-top: 18px;
+    display: grid;
+    gap: 12px;
+}
+
+/* кнопка “создать аккаунт/войти” ровная */
+.auth .actions button.primary {
+    width: 100%;
+    height: 46px;
+}
+
+/* нижняя строка “уже есть аккаунт / войти” */
+.auth .auth-bottom {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(229, 231, 224, 0.78);
+}
+
+.auth .auth-bottom a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(229, 231, 224, 0.18);
+    text-decoration: none;
+    color: rgba(229, 231, 224, 0.92);
+}
+
+.auth .auth-bottom a:hover {
+    background: rgba(229, 231, 224, 0.06);
+}
+
+/* --- DoD 6.1: AJAX candidates list (Add plant) --- */
+.candidate-box {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.candidate-item {
+    text-align: left;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.03);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.candidate-item:hover {
+    background: rgba(229, 231, 224, 0.07);
+}
+
+/* --- Этап 6.2: задачи ухода на карточке растения --- */
+.task-row {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.03);
+    margin-top: 8px;
+}
+
+/* 6.5: Perenual preview card */
+.perenual-preview {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    align-items: start;
+}
+
+.perenual-preview-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.perenual-preview-title {
+    font-weight: 800;
+}
+
+/* Карточка вида: аккуратное фото */
+.species-photo-wrap {
+    margin-top: 14px;
+    max-width: 520px;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.05);
+}
+
+.species-photo {
+    display: block;
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+}
+
+@media (max-width: 700px) {
+    .species-photo {
+        height: 300px;
+    }
+}
+
+/* === Dashboard / app index redesign === */
+
+.dashboard-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.dashboard-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.dashboard-hero__badge {
+    margin-bottom: 12px;
+}
+
+.dashboard-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.dashboard-page__subtitle {
+    max-width: 58ch;
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.dashboard-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.dashboard-card {
+    margin-top: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    min-height: 255px;
+}
+
+.dashboard-card__top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.dashboard-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    background: rgba(95, 122, 97, 0.24);
+    border: 1px solid rgba(95, 122, 97, 0.45);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+.dashboard-card--admin .dashboard-card__icon {
+    background: rgba(229, 231, 224, 0.08);
+    border-color: rgba(229, 231, 224, 0.18);
+}
+
+.dashboard-card__title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+}
+
+.dashboard-card__meta {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.dashboard-card__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.dashboard-card__footer {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+    .dashboard-page__title {
+        font-size: 28px;
+    }
+
+    .dashboard-hero,
+    .dashboard-card {
+        padding: 20px;
+    }
+
+    .dashboard-card {
+        min-height: auto;
+    }
+}
+
+/* === Today page redesign === */
+
+.today-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.today-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.today-hero__badge {
+    margin-bottom: 12px;
+}
+
+.today-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.today-page__subtitle {
+    max-width: 62ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.today-filter-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.today-filter-card__content {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.today-filter-card__text {
+    flex: 1 1 320px;
+}
+
+.today-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.today-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.today-filter-form {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.today-filter-form__field {
+    min-width: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.today-filter-form__field input {
+    max-width: 160px;
+}
+
+.today-filter-form__actions {
+    display: flex;
+    align-items: end;
+}
+
+.today-empty {
+    margin-top: 18px;
+    padding: 24px;
+}
+
+.today-empty__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.today-empty__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.today-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.today-plant-card {
+    margin-top: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+}
+
+.today-plant-card__top {
+    display: block;
+}
+
+.today-plant-card__main {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.today-plant-card__title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.today-plant-card__title {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.25;
+}
+
+.today-plant-card__title a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.today-plant-card__title a:hover {
+    text-decoration: underline;
+}
+
+.today-plant-card__badge {
+    white-space: nowrap;
+}
+
+.today-plant-card__species,
+.today-plant-card__date {
+    line-height: 1.6;
+}
+
+.today-plant-card__footer {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+    .today-page__title {
+        font-size: 28px;
+    }
+
+    .today-hero,
+    .today-filter-card,
+    .today-empty,
+    .today-plant-card {
+        padding: 20px;
+    }
+
+    .today-plant-card {
+        min-height: auto;
+    }
+
+    .today-filter-form__field input {
+        max-width: 100%;
+    }
+}
+
+/* === Catalog page redesign === */
+
+.catalog-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.catalog-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.catalog-hero__badge {
+    margin-bottom: 12px;
+}
+
+.catalog-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.catalog-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.catalog-admin-card,
+.catalog-filters-card,
+.catalog-empty {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.catalog-admin-card__head,
+.catalog-filters-card__head,
+.catalog-results__head {
+    margin-bottom: 14px;
+}
+
+.catalog-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.catalog-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.catalog-admin-form__grid,
+.catalog-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.catalog-tags-field {
+    grid-column: 1 / -1;
+}
+
+.catalog-tags-select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.04);
+    color: var(--text);
+    outline: none;
+}
+
+.catalog-tags-select:focus {
+    border-color: rgba(95, 122, 97, 0.8);
+    box-shadow: 0 0 0 3px rgba(95, 122, 97, 0.18);
+}
+
+.catalog-help-text {
+    margin-top: 6px;
+    line-height: 1.55;
+}
+
+.catalog-form-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.catalog-empty__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.catalog-empty__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.catalog-results {
+    margin-top: 18px;
+}
+
+.catalog-results__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.catalog-results__item {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .catalog-page__title {
+        font-size: 28px;
+    }
+
+    .catalog-hero,
+    .catalog-admin-card,
+    .catalog-filters-card,
+    .catalog-empty {
+        padding: 20px;
+    }
+}
+
+/* === Shared fragments redesign === */
+
+.capric-badge {
+    white-space: nowrap;
+}
+
+.form-errors__title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.form-errors__item + .form-errors__item {
+    margin-top: 4px;
+}
+
+.species-card,
+.user-plant-card {
+    margin-top: 0;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+}
+
+.species-card__top,
+.user-plant-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.species-card__head,
+.user-plant-card__head {
+    flex: 1 1 240px;
+}
+
+.species-card__title,
+.user-plant-card__title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.species-card__latin,
+.user-plant-card__species {
+    margin-top: 6px;
+    line-height: 1.5;
+}
+
+.species-card__badge-wrap,
+.user-plant-card__badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.species-card__description {
+    margin-top: 14px;
+    line-height: 1.7;
+}
+
+.species-card__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.species-card__stat {
+    padding: 12px 14px;
+    border: 1px solid rgba(229, 231, 224, 0.10);
+    border-radius: 14px;
+    background: rgba(229, 231, 224, 0.03);
+    line-height: 1.55;
+}
+
+.species-card__stat-label {
+    margin-right: 4px;
+}
+
+.species-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.species-card__tag {
+    margin-right: 0;
+}
+
+.species-card__footer,
+.user-plant-card__footer {
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.user-plant-card__meta {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .species-card,
+    .user-plant-card {
+        padding: 20px;
+    }
+
+    .species-card__title,
+    .user-plant-card__title {
+        font-size: 22px;
+    }
+
+    .species-card__stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === My plants page redesign === */
+
+.plants-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.plants-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.plants-hero__badge {
+    margin-bottom: 12px;
+}
+
+.plants-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.plants-page__subtitle {
+    max-width: 62ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.plants-actions-card,
+.plants-empty {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.plants-actions-card__content {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.plants-actions-card__text {
+    flex: 1 1 320px;
+}
+
+.plants-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.plants-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.plants-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.plants-empty__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.plants-empty__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.plants-empty__actions {
+    margin-top: 16px;
+}
+
+.plants-results {
+    margin-top: 18px;
+}
+
+.plants-results__head {
+    margin-bottom: 14px;
+}
+
+.plants-results__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.plants-results__item {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .plants-page__title {
+        font-size: 28px;
+    }
+
+    .plants-hero,
+    .plants-actions-card,
+    .plants-empty {
+        padding: 20px;
+    }
+}
+
+/* === Create plant page redesign === */
+
+.create-plant-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.create-plant-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.create-plant-hero__badge {
+    margin-bottom: 12px;
+}
+
+.create-plant-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.create-plant-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.create-plant-mode-card,
+.create-plant-form-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.create-plant-mode-card__content {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.create-plant-mode-card__text {
+    flex: 1 1 320px;
+}
+
+.create-plant-mode-switch {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.create-plant-form-card__head {
+    margin-bottom: 14px;
+}
+
+.create-plant-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.create-plant-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.create-plant-form {
+    display: block;
+}
+
+.create-plant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.create-plant-species-field,
+.create-plant-notes-field {
+    grid-column: 1 / -1;
+}
+
+.create-plant-search-wrap {
+    margin-bottom: 8px;
+}
+
+.create-plant-search-wrap input,
+.create-plant-form select,
+.create-plant-form textarea {
+    width: 100%;
+}
+
+.create-plant-help-text {
+    margin-top: 6px;
+    line-height: 1.55;
+}
+
+.create-plant-candidates {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.create-plant-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+}
+
+@media (max-width: 700px) {
+    .create-plant-page__title {
+        font-size: 28px;
+    }
+
+    .create-plant-hero,
+    .create-plant-mode-card,
+    .create-plant-form-card {
+        padding: 20px;
+    }
+
+    .create-plant-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === Identify page redesign === */
+
+.identify-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.identify-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.identify-hero__badge {
+    margin-bottom: 12px;
+}
+
+.identify-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.identify-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.identify-step-card,
+.identify-search-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.identify-step-card__head,
+.identify-search-card__head {
+    margin-bottom: 14px;
+}
+
+.identify-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.identify-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.identify-subtitle {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.identify-help-text {
+    margin: 6px 0 0 0;
+    line-height: 1.55;
+}
+
+.identify-upload-block {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.identify-file-field {
+    flex: 1 1 320px;
+    margin-bottom: 0;
+}
+
+.identify-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.identify-status {
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.identify-error {
+    margin-top: 12px;
+}
+
+.identify-candidates-block {
+    margin-top: 16px;
+}
+
+.identify-candidates-block__head {
+    margin-bottom: 8px;
+}
+
+.identify-candidates {
+    margin-top: 0;
+}
+
+.identify-selected {
+    margin-top: 14px;
+    line-height: 1.6;
+}
+
+.identify-search-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.identify-search-input {
+    flex: 1 1 320px;
+    min-width: 240px;
+}
+
+.identify-search-result {
+    margin-top: 14px;
+}
+
+@media (max-width: 700px) {
+    .identify-page__title {
+        font-size: 28px;
+    }
+
+    .identify-hero,
+    .identify-step-card,
+    .identify-search-card {
+        padding: 20px;
+    }
+
+    .identify-search-input {
+        min-width: 100%;
+    }
+}
+
+/* === Plant details page redesign === */
+
+.plant-details-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.plant-details-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.plant-details-hero__badge {
+    margin-bottom: 12px;
+}
+
+.plant-details-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.plant-details-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.plant-details-card,
+.plant-details-panel,
+.plant-details-actions-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.plant-details-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.plant-details-card__head {
+    flex: 1 1 260px;
+}
+
+.plant-details-card__title {
+    margin: 0;
+    font-size: 30px;
+    line-height: 1.15;
+}
+
+.plant-details-card__species,
+.plant-details-card__latin {
+    margin-top: 6px;
+    line-height: 1.55;
+}
+
+.plant-details-card__badges {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.plant-details-water-row {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.plant-details-next-watering {
+    line-height: 1.6;
+}
+
+.plant-details-status {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+.plant-details-error {
+    margin-top: 10px;
+}
+
+.plant-details-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.plant-details-stat {
+    padding: 14px 16px;
+    border: 1px solid rgba(229, 231, 224, 0.10);
+    border-radius: 14px;
+    background: rgba(229, 231, 224, 0.03);
+    line-height: 1.6;
+}
+
+.plant-details-stat__label {
+    margin-right: 4px;
+}
+
+.plant-details-stat__value {
+    font-weight: 700;
+}
+
+.plant-details-notes {
+    margin-top: 16px;
+}
+
+.plant-details-block-title {
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.plant-details-notes__text {
+    line-height: 1.75;
+}
+
+.plant-details-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.plant-details-panel__head {
+    margin-bottom: 12px;
+}
+
+.plant-details-panel__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.plant-details-panel__subtitle {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.plant-details-empty {
+    line-height: 1.6;
+}
+
+.plant-details-task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plant-details-task-row {
+    padding: 14px 16px;
+    border: 1px solid rgba(229, 231, 224, 0.10);
+    border-radius: 14px;
+    background: rgba(229, 231, 224, 0.03);
+}
+
+.plant-details-task-row__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.plant-details-task-row__type {
+    font-weight: 700;
+}
+
+.plant-details-task-row__date {
+    line-height: 1.5;
+}
+
+.plant-details-photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
+}
+
+.plant-details-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: block;
+}
+
+.plant-details-upload-form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+}
+
+.plant-details-upload-field {
+    flex: 1 1 260px;
+    margin-bottom: 0;
+}
+
+.plant-details-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+    .plant-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .plant-details-page__title {
+        font-size: 28px;
+    }
+
+    .plant-details-card__title {
+        font-size: 26px;
+    }
+
+    .plant-details-hero,
+    .plant-details-card,
+    .plant-details-panel,
+    .plant-details-actions-card {
+        padding: 20px;
+    }
+
+    .plant-details-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === Edit plant page redesign === */
+
+.edit-plant-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.edit-plant-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.edit-plant-hero__badge {
+    margin-bottom: 12px;
+}
+
+.edit-plant-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.edit-plant-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.edit-plant-form-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.edit-plant-form-card__head {
+    margin-bottom: 14px;
+}
+
+.edit-plant-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.edit-plant-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.edit-plant-form {
+    display: block;
+}
+
+.edit-plant-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.edit-plant-notes-field {
+    grid-column: 1 / -1;
+}
+
+.edit-plant-form select,
+.edit-plant-form textarea {
+    width: 100%;
+}
+
+.edit-plant-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+}
+
+@media (max-width: 700px) {
+    .edit-plant-page__title {
+        font-size: 28px;
+    }
+
+    .edit-plant-hero,
+    .edit-plant-form-card {
+        padding: 20px;
+    }
+
+    .edit-plant-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === Plant photos page redesign === */
+
+.plant-photos-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.plant-photos-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.plant-photos-hero__badge {
+    margin-bottom: 12px;
+}
+
+.plant-photos-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.plant-photos-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.plant-photos-page__plant {
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.plant-photos-identify-card,
+.plant-photos-search-card,
+.plant-photos-gallery-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.plant-photos-section__head {
+    margin-bottom: 12px;
+}
+
+.plant-photos-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.plant-photos-section__subtitle {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.plant-photos-status,
+.plant-photos-error,
+.plant-photos-selected {
+    margin-top: 10px;
+}
+
+.plant-photos-candidates {
+    margin-top: 12px;
+}
+
+.plant-photos-search-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.plant-photos-search-input {
+    flex: 1 1 320px;
+    min-width: 240px;
+}
+
+.plant-photos-search-result {
+    margin-top: 14px;
+}
+
+.plant-photos-empty {
+    line-height: 1.6;
+}
+
+.plant-photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+}
+
+.plant-photos-item {
+    margin-top: 0;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-photos-item__image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    display: block;
+}
+
+.plant-photos-item__meta {
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.plant-photos-item__actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.plant-photos-delete-form {
+    margin: 0;
+}
+
+.plant-photos-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+}
+
+/* === Plant events page redesign === */
+
+.plant-events-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.plant-events-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.plant-events-hero__badge {
+    margin-bottom: 12px;
+}
+
+.plant-events-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.plant-events-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.plant-events-form-card,
+.plant-events-list-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.plant-events-section__head {
+    margin-bottom: 12px;
+}
+
+.plant-events-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.plant-events-section__subtitle {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.plant-events-form textarea {
+    width: 100%;
+}
+
+.plant-events-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(229, 231, 224, 0.10);
+}
+
+.plant-events-empty {
+    line-height: 1.6;
+}
+
+.plant-events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.plant-events-item {
+    margin-top: 0;
+    padding: 16px;
+}
+
+.plant-events-item__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.plant-events-item__type {
+    font-weight: 700;
+}
+
+.plant-events-item__comment {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .plant-photos-page__title,
+    .plant-events-page__title {
+        font-size: 28px;
+    }
+
+    .plant-photos-hero,
+    .plant-photos-identify-card,
+    .plant-photos-search-card,
+    .plant-photos-gallery-card,
+    .plant-events-hero,
+    .plant-events-form-card,
+    .plant-events-list-card {
+        padding: 20px;
+    }
+
+    .plant-photos-search-input {
+        min-width: 100%;
+    }
+}
+
+/* === Species details page redesign === */
+
+.species-details-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.species-details-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.species-details-hero__top {
+    margin-bottom: 16px;
+}
+
+.species-details-hero__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.species-details-hero__head {
+    flex: 1 1 280px;
+}
+
+.species-details-page__title {
+    margin: 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.species-details-page__latin {
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+.species-details-score-card {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border: 1px solid rgba(229, 231, 224, 0.10);
+    border-radius: 16px;
+    background: rgba(229, 231, 224, 0.03);
+}
+
+.species-details-score-card__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.species-details-score-card__value {
+    line-height: 1.6;
+}
+
+.species-details-section__title {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.species-details-section__subtitle {
+    margin: 8px 0 0 0;
+    line-height: 1.6;
+}
+
+.species-details-reasons {
+    margin-top: 12px;
+}
+
+.species-details-reasons__title {
+    margin-bottom: 8px;
+}
+
+.species-details-reasons__list {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.65;
+}
+
+.species-details-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 16px;
+    margin-top: 18px;
+}
+
+.species-details-main-card,
+.species-details-care-card {
+    margin-top: 0;
+    padding: 22px;
+}
+
+.species-details-photo-wrap {
+    width: 100%;
+}
+
+.species-details-photo {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    display: block;
+}
+
+.species-details-description {
+    margin-top: 16px;
+}
+
+.species-details-block-title {
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.species-details-description__text {
+    line-height: 1.75;
+}
+
+.species-details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.species-details-tag {
+    margin-right: 0;
+}
+
+.species-details-care-card__head {
+    margin-bottom: 14px;
+}
+
+.species-details-care-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.species-details-care-item {
+    padding: 14px 16px;
+    border: 1px solid rgba(229, 231, 224, 0.10);
+    border-radius: 14px;
+    background: rgba(229, 231, 224, 0.03);
+}
+
+.species-details-care-item__label {
+    margin-bottom: 6px;
+}
+
+.species-details-care-item__value {
+    line-height: 1.65;
+}
+
+@media (max-width: 900px) {
+    .species-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .species-details-page__title {
+        font-size: 28px;
+    }
+
+    .species-details-hero,
+    .species-details-main-card,
+    .species-details-care-card {
+        padding: 20px;
+    }
+}
+
+/* === Admin page redesign === */
+
+.admin-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.admin-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.admin-hero__badge {
+    margin-bottom: 12px;
+}
+
+.admin-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.admin-page__subtitle {
+    max-width: 60ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.admin-actions-card {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.admin-actions-card__content {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.admin-actions-card__text {
+    flex: 1 1 320px;
+}
+
+.admin-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.admin-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 700px) {
+    .admin-page__title {
+        font-size: 28px;
+    }
+
+    .admin-hero,
+    .admin-actions-card {
+        padding: 20px;
+    }
+}
+
+/* === Suitable page redesign === */
+
+.suitable-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.suitable-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.suitable-hero__badge {
+    margin-bottom: 12px;
+}
+
+.suitable-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.suitable-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.suitable-filters-card,
+.suitable-empty {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.suitable-section__head,
+.suitable-results__head {
+    margin-bottom: 14px;
+}
+
+.suitable-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.suitable-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.suitable-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.suitable-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.suitable-empty__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.suitable-empty__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.suitable-results {
+    margin-top: 18px;
+}
+
+.suitable-results__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.suitable-results__item {
+    margin: 0;
+}
+
+/* === Top capricious page redesign === */
+
+.top-capricious-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.top-capricious-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.top-capricious-hero__badge {
+    margin-bottom: 12px;
+}
+
+.top-capricious-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.top-capricious-page__subtitle {
+    max-width: 64ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.top-capricious-filters-card,
+.top-capricious-empty {
+    margin-top: 18px;
+    padding: 22px;
+}
+
+.top-capricious-section__head,
+.top-capricious-results__head {
+    margin-bottom: 14px;
+}
+
+.top-capricious-section__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+.top-capricious-section__subtitle {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.top-capricious-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.top-capricious-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.top-capricious-empty__title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+}
+
+.top-capricious-empty__text {
+    margin: 0;
+    line-height: 1.65;
+}
+
+.top-capricious-results {
+    margin-top: 18px;
+}
+
+.top-capricious-results__list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.top-capricious-results__item {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+    .suitable-page__title,
+    .top-capricious-page__title {
+        font-size: 28px;
+    }
+
+    .suitable-hero,
+    .suitable-filters-card,
+    .suitable-empty,
+    .top-capricious-hero,
+    .top-capricious-filters-card,
+    .top-capricious-empty {
+        padding: 20px;
+    }
+}
+
+/* === Generic error pages redesign === */
+
+.error-page,
+.integration-error-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.error-hero,
+.integration-error-hero {
+    margin-top: 8px;
+    padding: 24px 26px;
+}
+
+.error-hero__badge,
+.integration-error-hero__badge {
+    margin-bottom: 12px;
+}
+
+.error-page__title,
+.integration-error-page__title {
+    margin: 0 0 10px 0;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+}
+
+.error-page__subtitle,
+.integration-error-page__subtitle {
+    max-width: 62ch;
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.error-card,
+.integration-error-card {
+    margin-top: 18px;
+    padding: 22px;
+    max-width: 860px;
+}
+
+.error-card__text {
+    margin: 0;
+    line-height: 1.7;
+}
+
+.error-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.error-list-card__title,
+.integration-error-alert__title {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.error-list-card__list {
+    margin: 0;
+    padding-left: 18px;
+    line-height: 1.65;
+}
+
+.integration-error-alert__message {
+    line-height: 1.65;
+}
+
+.integration-error-alert__details {
+    margin-top: 10px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .error-page__title,
+    .integration-error-page__title {
+        font-size: 28px;
+    }
+
+    .error-hero,
+    .integration-error-hero,
+    .error-card,
+    .integration-error-card {
+        padding: 20px;
+    }
+}
+
+/* === Create photo select page redesign === */
+
+.create-photo-page {
+    padding-top: 22px;
+    padding-bottom: 28px;
+}
+
+.create-photo-alert {
+    margin-top: 18px;
+}
+
+.create-photo-step-photo {
+    display: grid;
+    grid-template-columns: minmax(240px, 360px) 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.create-photo-step-photo__label {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.create-photo-step-photo__image-wrap {
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: rgba(229, 231, 224, 0.04);
+}
+
+.create-photo-step-photo__image {
+    display: block;
+    width: 100%;
+    max-height: 360px;
+    object-fit: cover;
+}
+
+.create-photo-step-photo__content {
+    min-width: 0;
+}
+
+.create-photo-candidate-list {
+    margin-top: 10px;
+}
+
+.create-photo-candidate {
+    position: relative;
+}
+
+.create-photo-candidate + .create-photo-candidate {
+    margin-top: 8px;
+}
+
+.create-photo-candidate__input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.create-photo-candidate__label {
+    display: block;
+}
+
+.create-photo-candidate__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.create-photo-candidate__score {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.create-photo-candidate__subtitle {
+    margin-top: 4px;
+    line-height: 1.55;
+}
+
+.create-photo-candidate__input:checked + .create-photo-candidate__label {
+    background: rgba(229, 231, 224, 0.08);
+    border-color: rgba(229, 231, 224, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(229, 231, 224, 0.12);
+}
+
+.create-photo-candidate__input:focus-visible + .create-photo-candidate__label {
+    outline: 2px solid rgba(229, 231, 224, 0.35);
+    outline-offset: 2px;
+}
+
+.create-photo-preview-card,
+.create-photo-form-card {
+    margin-top: 18px;
+}
+
+.create-photo-help-text {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+    .create-photo-step-photo {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .create-photo-step-photo__image {
+        max-height: 280px;
+    }
+}
+
