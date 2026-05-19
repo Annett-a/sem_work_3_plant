@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/base :: layout('Личный кабинет', '', ~{::main})}">
+
+<main class="container dashboard-page">
+    <section class="card dashboard-hero">
+        <span class="badge dashboard-hero__badge">Основные разделы</span>
+        <h1 class="dashboard-page__title">Личный кабинет</h1>
+        <p class="muted dashboard-page__subtitle">
+            Здесь собраны основные инструменты для распознавания растений, работы с локальным каталогом
+            и ведения своей домашней оранжереи.
+        </p>
+    </section>
+
+    <section class="dashboard-actions">
+        <article class="card dashboard-card">
+            <div class="dashboard-card__top">
+                <span class="dashboard-card__icon">AI</span>
+                <div>
+                    <h2 class="dashboard-card__title">Распознавание</h2>
+                    <div class="muted dashboard-card__meta">Фото · определение · поиск</div>
+                </div>
+            </div>
+
+            <p class="muted dashboard-card__text">
+                Загрузить фото, получить варианты распознавания и перейти к поиску карточки растения.
+            </p>
+
+            <div class="dashboard-card__footer">
+                <a class="btn btn-primary" th:href="@{/app/identify/ajax}">Распознать</a>
+            </div>
+        </article>
+
+        <article class="card dashboard-card">
+            <div class="dashboard-card__top">
+                <span class="dashboard-card__icon">DB</span>
+                <div>
+                    <h2 class="dashboard-card__title">Каталог видов</h2>
+                    <div class="muted dashboard-card__meta">Локальная база · фильтры</div>
+                </div>
+            </div>
+
+            <p class="muted dashboard-card__text">
+                Открыть каталог растений из локальной базы, просмотреть карточки видов и подобрать подходящие варианты.
+            </p>
+
+            <div class="dashboard-card__footer">
+                <a class="btn btn-primary" th:href="@{/app/species}">Открыть каталог</a>
+            </div>
+        </article>
+
+        <article class="card dashboard-card">
+            <div class="dashboard-card__top">
+                <span class="dashboard-card__icon">MY</span>
+                <div>
+                    <h2 class="dashboard-card__title">Мои растения</h2>
+                    <div class="muted dashboard-card__meta">Коллекция · уход · история</div>
+                </div>
+            </div>
+
+            <p class="muted dashboard-card__text">
+                Перейти к своей коллекции, добавлять растения, смотреть карточки и вести события ухода.
+            </p>
+
+            <div class="dashboard-card__footer">
+                <a class="btn btn-primary" th:href="@{/app/plants}">Открыть</a>
+            </div>
+        </article>
+
+        <article class="card dashboard-card dashboard-card--admin" sec:authorize="hasRole('ADMIN')">
+            <div class="dashboard-card__top">
+                <span class="dashboard-card__icon">AD</span>
+                <div>
+                    <h2 class="dashboard-card__title">Админка</h2>
+                    <div class="muted dashboard-card__meta">Служебный доступ</div>
+                </div>
+            </div>
+
+            <p class="muted dashboard-card__text">
+                Раздел для административных действий и управления служебными возможностями системы.
+            </p>
+
+            <div class="dashboard-card__footer">
+                <a class="btn btn-ghost" th:href="@{/admin}">Открыть</a>
+            </div>
+        </article>
+    </section>
+</main>
+</html>

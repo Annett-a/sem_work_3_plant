@@ -1,0 +1,24 @@
+package ru.itis.documents.security;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import ru.itis.documents.repository.AppUserRepository;
+
+@Service
+public class AppUserDetailsService implements UserDetailsService {
+
+    private final AppUserRepository userRepository;
+
+    public AppUserDetailsService(AppUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmailIgnoreCase(username)
+                .map(AppUserPrincipal::new)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+    }
+}
