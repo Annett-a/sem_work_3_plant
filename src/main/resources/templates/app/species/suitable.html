@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/base :: layout('Подбор видов', '', ~{::main})}">
+
+<main class="container suitable-page">
+    <section class="card suitable-hero">
+        <span class="badge suitable-hero__badge">Умный подбор</span>
+        <h1 class="suitable-page__title">Подбор растений под условия квартиры</h1>
+        <p class="muted suitable-page__subtitle">
+            Выбери подходящий свет, полив и тег, чтобы быстро найти подходящие растения.
+        </p>
+    </section>
+
+    <section class="card suitable-filters-card">
+        <div class="suitable-section__head">
+            <h2 class="suitable-section__title">Фильтры подбора</h2>
+            <p class="muted suitable-section__subtitle">
+                Настрой фильтры и выбери растения, которые лучше подходят под твои условия.
+            </p>
+        </div>
+
+        <form method="get" th:action="@{/app/species/suitable}" class="suitable-form">
+            <div class="suitable-grid">
+
+                <div class="form-row">
+                    <label for="light">Свет в комнате</label>
+                    <select id="light" name="light">
+                        <option value="" th:selected="${selectedLight == null}">Любой</option>
+                        <option value="яркий свет" th:selected="${selectedLight == 'яркий свет'}">Яркий свет</option>
+                        <option value="полутень" th:selected="${selectedLight == 'полутень'}">Полутень</option>
+                        <option value="тень" th:selected="${selectedLight == 'тень'}">Тень</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="maxWaterInterval">Максимальный интервал полива </label>
+                    <input id="maxWaterInterval" name="maxWaterInterval" inputmode="numeric"
+                           placeholder="например: 10" th:value="${maxWaterInterval}"/>
+                </div>
+
+                <div class="form-row">
+                    <label for="tag">Тег</label>
+                    <select id="tag" name="tag">
+                        <option value="" th:selected="${tag == null || #strings.isEmpty(tag)}">Любой</option>
+                        <option th:each="t : ${tagOptions}"
+                                th:value="${t.label}"
+                                th:text="${t.label}"
+                                th:selected="${t.selected}">
+                            tag
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="limit">Лимит результата</label>
+                    <input id="limit" name="limit" inputmode="numeric"
+                           placeholder="по умолчанию: 50" th:value="${limit}"/>
+                </div>
+            </div>
+
+            <div class="suitable-actions">
+                <button class="btn btn-primary" type="submit">Подобрать</button>
+                <a class="btn btn-ghost" th:href="@{/app/species/suitable}">Сбросить</a>
+                <a class="btn btn-ghost" th:href="@{/app/species}">Каталог</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card suitable-empty"
+             th:if="${species == null || #lists.isEmpty(species)}">
+        <h3 class="suitable-empty__title">Ничего не найдено</h3>
+        <p class="muted suitable-empty__text">
+            Попробуй убрать один из фильтров или указать более широкий диапазон полива.
+        </p>
+    </section>
+
+    <section class="suitable-results"
+             th:if="${species != null && !#lists.isEmpty(species)}">
+        <div class="suitable-results__head">
+            <h2 class="suitable-section__title">Результаты подбора</h2>
+            <p class="muted suitable-section__subtitle">
+                Найдено видов: <span th:text="${#lists.size(species)}">0</span>
+            </p>
+        </div>
+
+        <div class="suitable-results__list">
+            <div th:each="s : ${species}" class="suitable-results__item">
+                <div th:replace="~{fragments/components :: speciesCard(${s})}"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</html>

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Вид не найден', '', ~{::main})}">
+
+<main class="container">
+    <div class="card">
+        <h1 class="u-mt-0">Вид не найден</h1>
+        <div class="muted" th:text="${message}">Запрошенный вид не найден.</div>
+
+        <div class="u-mt-14">
+            <a class="btn btn-primary" th:href="@{/app/species}">Вернуться в каталог</a>
+        </div>
+    </div>
+</main>
+
+</html>

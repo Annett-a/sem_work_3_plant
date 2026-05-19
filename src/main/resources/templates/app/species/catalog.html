@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/base :: layout('Каталог видов', '', ~{::main})}">
+
+<main class="container catalog-page">
+    <section class="card catalog-hero">
+        <span class="badge catalog-hero__badge">Каталог растений</span>
+        <h1 class="catalog-page__title">Каталог видов</h1>
+        <p class="muted catalog-page__subtitle">
+            Здесь можно искать растения по названию, уровню освещения, капризности и тегам.
+            Каталог помогает быстро подобрать подходящий вид и открыть его карточку.
+        </p>
+    </section>
+
+    <div class="alert ok" th:if="${msg != null}" th:text="${msg}">ok</div>
+
+    <section class="card catalog-admin-card"
+             sec:authorize="hasRole('ADMIN')">
+        <div class="catalog-admin-card__head">
+            <div>
+                <h2 class="catalog-section__title">Добавление новых видов</h2>
+                <p class="muted catalog-section__subtitle">
+                    Импорт новых видов перенесён в отдельную админку.
+                </p>
+            </div>
+        </div>
+
+        <div class="catalog-form-actions">
+            <a class="btn btn-primary" th:href="@{/admin}">Открыть админку</a>
+        </div>
+    </section>
+
+    <section class="card catalog-filters-card">
+        <div class="catalog-filters-card__head">
+            <div>
+                <h2 class="catalog-section__title">Фильтры поиска</h2>
+                <p class="muted catalog-section__subtitle">
+                    Можно искать по названию, освещению, капризности и нескольким тегам сразу.
+                </p>
+            </div>
+        </div>
+
+        <form method="get"
+              th:action="@{/app/species}"
+              class="catalog-filters-form">
+
+            <div class="catalog-filters-grid">
+                <div class="form-row">
+                    <label for="q">Поиск</label>
+                    <input id="q"
+                           name="q"
+                           placeholder="название или латинское"
+                           th:value="${q}"/>
+                </div>
+
+                <div class="form-row">
+                    <label for="light">Свет</label>
+                    <select id="light" name="light">
+                        <option value="" th:selected="${selectedLight == null}">Любой</option>
+                        <option value="яркий свет" th:selected="${selectedLight == 'яркий свет'}">Яркий свет</option>
+                        <option value="полутень" th:selected="${selectedLight == 'полутень'}">Полутень</option>
+                        <option value="тень" th:selected="${selectedLight == 'тень'}">Тень</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="cap">Капризность</label>
+                    <input id="cap"
+                           name="cap"
+                           list="capList"
+                           placeholder="например: LOW"
+                           th:value="${cap}"/>
+                    <datalist id="capList">
+                        <option value="LOW">Низкая</option>
+                        <option value="MID">Средняя</option>
+                        <option value="HIGH">Высокая</option>
+                    </datalist>
+                    <div class="muted catalog-help-text">
+                        LOW — низкая, MID — средняя, HIGH — высокая.
+                    </div>
+                </div>
+
+                <div class="form-row catalog-tags-field">
+                    <label for="tagSelect">Теги (можно несколько)</label>
+                    <select id="tagSelect"
+                            multiple
+                            size="6"
+                            class="catalog-tags-select">
+                        <option th:each="t : ${tagOptions}"
+                                th:value="${t.id}"
+                                th:text="${t.label}"
+                                th:selected="${t.selected}">
+                            tag
+                        </option>
+                    </select>
+
+                    <input type="hidden" id="tags" name="tags" th:value="${tags}"/>
+
+                    <div class="muted catalog-help-text">
+                        Зажать Ctrl (Windows) / Cmd (Mac), чтобы выбрать несколько.
+                    </div>
+                </div>
+            </div>
+
+            <div class="catalog-form-actions">
+                <button class="btn btn-primary" type="submit">Показать</button>
+                <a class="btn btn-ghost" th:href="@{/app/species}">Сбросить</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card catalog-empty"
+             th:if="${species == null || #lists.isEmpty(species)}">
+        <h3 class="catalog-empty__title">Ничего не найдено</h3>
+        <p class="muted catalog-empty__text">
+            Попробуйте изменить поисковую строку или ослабить фильтры.
+        </p>
+    </section>
+
+    <section class="catalog-results"
+             th:if="${species != null && !#lists.isEmpty(species)}">
+        <div class="catalog-results__head">
+            <h2 class="catalog-section__title">Результаты</h2>
+            <p class="muted catalog-section__subtitle">
+                Найдено видов: <span th:text="${#lists.size(species)}">0</span>
+            </p>
+        </div>
+
+        <div class="catalog-results__list">
+            <div th:each="s : ${species}" class="catalog-results__item">
+                <div th:replace="~{fragments/components :: speciesCard(${s})}"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</html>

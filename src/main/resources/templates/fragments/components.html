@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:plant="http://www.example.com/plant"
+      th:remove="tag">
+
+<div th:fragment="formErrors" th:remove="tag">
+    <div class="alert error form-errors" th:if="${#fields.hasErrors('*')}">
+        <div class="form-errors__title">Проверь поля формы:</div>
+        <div class="error-text form-errors__item"
+             th:each="e : ${#fields.errors('*')}"
+             th:text="${e}">Ошибка
+        </div>
+    </div>
+</div>
+
+<div th:fragment="formToken" th:remove="tag">
+    <input type="hidden" th:name="${formTokenParam}" th:value="${formToken}"/>
+</div>
+
+<div th:fragment="speciesCard(s)" class="card species-card">
+    <div class="species-card__top">
+        <div class="species-card__head">
+            <h2 class="species-card__title" th:text="${s.name}">Название</h2>
+            <div class="muted species-card__latin"
+                 th:if="${s.latinName}"
+                 th:text="${s.latinName}">Latin
+            </div>
+        </div>
+
+        <div class="species-card__badge-wrap">
+            <plant:capric-badge value="${s.capriciousness}"></plant:capric-badge>
+        </div>
+    </div>
+
+    <div class="muted species-card__description"
+         th:if="${s.description}"
+         th:text="${#strings.length(s.description) > 220 ? #strings.substring(s.description, 0, 220) + '…' : s.description}">
+        Описание
+    </div>
+
+    <div class="species-card__stats" th:if="${s.care != null}">
+        <div class="species-card__stat" th:if="${s.care.lightLevel != null}">
+            <span class="muted species-card__stat-label">Свет:</span>
+            <span class="species-card__stat-value" th:text="${s.care.lightLevel}">яркий свет</span>
+        </div>
+
+        <div class="species-card__stat"
+             th:if="${s.care.wateringText != null}">
+            <span class="muted species-card__stat-label">Полив:</span>
+            <span class="species-card__stat-value" th:text="${s.care.wateringText}">7 дн.</span>
+        </div>
+
+        <div class="species-card__stat">
+            <span class="muted species-card__stat-label">Уход:</span>
+            <span class="species-card__stat-value"
+                  th:text="${s.capriciousness != null ? s.capriciousness.label : 'Средний'}">Средний</span>
+        </div>
+    </div>
+
+    <div class="species-card__tags"
+         th:if="${s.tags != null && !#lists.isEmpty(s.tags)}">
+        <span class="badge species-card__tag"
+              th:each="t : ${s.tags}"
+              th:text="${t}">tag</span>
+    </div>
+
+    <div class="species-card__footer">
+        <a class="btn btn-primary" th:href="@{/app/species/{id}(id=${s.id})}">Открыть</a>
+    </div>
+</div>
+
+<div th:fragment="userPlantCard(p)" class="card user-plant-card">
+    <div class="user-plant-card__top">
+        <div class="user-plant-card__head">
+            <h2 class="user-plant-card__title" th:text="${p.nickname}">Растение</h2>
+            <div class="muted user-plant-card__species"
+                 th:if="${p.speciesName}"
+                 th:text="${p.speciesName}">Вид
+            </div>
+        </div>
+
+        <div class="user-plant-card__badges">
+            <plant:capric-badge value="${p.cap}"></plant:capric-badge>
+            <span class="badge"
+                  th:if="${p.roomName}"
+                  th:text="${p.roomName}">Комната</span>
+        </div>
+    </div>
+
+    <div class="muted user-plant-card__meta"
+         th:if="${p.nextWateringText}"
+         th:text="${p.nextWateringText}">Полив
+    </div>
+
+    <div class="muted user-plant-card__meta"
+         th:if="${p.purchaseDate}"
+         th:text="'Куплено: ' + ${p.purchaseDate}">Дата
+    </div>
+
+    <div class="user-plant-card__footer">
+        <a class="btn btn-primary" th:href="@{/app/plants/{id}(id=${p.id})}">Открыть</a>
+        <a class="btn" th:href="@{/app/plants/{id}/edit(id=${p.id})}">Редактировать</a>
+        <a class="btn btn-ghost" th:href="@{/app/plants/{id}/delete(id=${p.id})}">Удалить</a>
+    </div>
+</div>
+
+</html>

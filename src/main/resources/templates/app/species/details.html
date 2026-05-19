@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:plant="http://www.example.com/plant"
+      th:replace="~{layouts/base :: layout(${s.name}, '', ~{::main})}">
+
+<main class="container species-details-page">
+    <section class="card species-details-hero">
+        <div class="species-details-hero__top">
+            <a class="btn btn-ghost" th:href="@{/app/species}">← Назад в каталог</a>
+        </div>
+
+        <div class="species-details-hero__content">
+            <div class="species-details-hero__head">
+                <h1 class="species-details-page__title" th:text="${s.name}">Название</h1>
+                <div class="muted species-details-page__latin"
+                     th:if="${s.latinName}"
+                     th:text="${s.latinName}">Latin
+                </div>
+            </div>
+
+            <div class="species-details-hero__badge">
+                <plant:capric-badge value="${s.capriciousness}"></plant:capric-badge>
+            </div>
+        </div>
+
+        <div class="species-details-score-card"
+             th:if="${s.capriciousness != null}">
+            <div class="species-details-score-card__head">
+                <h2 class="species-details-section__title">Капризность</h2>
+                <div class="muted species-details-score-card__value">
+                    Score: <span th:text="${s.capriciousness.score}">50</span> / 100
+                </div>
+            </div>
+
+            <div class="species-details-reasons"
+                 th:if="${s.capriciousness.reasons != null && !#lists.isEmpty(s.capriciousness.reasons)}">
+                <div class="muted species-details-reasons__title">Почему так:</div>
+                <ul class="species-details-reasons__list">
+                    <li th:each="r : ${s.capriciousness.reasons}" th:text="${r}">reason</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="species-details-grid">
+        <section class="card species-details-main-card">
+            <div class="species-details-photo-wrap">
+                <img th:if="${s.imageUrl != null and !#strings.isEmpty(s.imageUrl)}"
+                     th:src="${#strings.startsWith(s.imageUrl, 'http://') ? #strings.replace(s.imageUrl, 'http://', 'https://') : s.imageUrl}"
+                     th:alt="${s.name}"
+                     class="species-details-photo"
+                     th:attr="data-fallback-src=@{/images/flat.jpg}"/>
+
+                <img th:unless="${s.imageUrl != null and !#strings.isEmpty(s.imageUrl)}"
+                     th:src="@{/images/flat.jpg}"
+                     th:alt="${s.name}"
+                     class="species-details-photo"/>
+            </div>
+
+            <div class="species-details-description"
+                 th:if="${s.description}">
+                <div class="muted species-details-block-title">Описание</div>
+                <div class="species-details-description__text" th:text="${s.description}">Описание</div>
+            </div>
+
+            <div class="species-details-tags"
+                 th:if="${s.tags != null && !#lists.isEmpty(s.tags)}">
+                <span class="badge species-details-tag"
+                      th:each="t : ${s.tags}"
+                      th:text="${t}">tag</span>
+            </div>
+        </section>
+
+        <section class="card species-details-care-card">
+            <div class="species-details-care-card__head">
+                <h2 class="species-details-section__title">Параметры ухода</h2>
+                <p class="muted species-details-section__subtitle">
+                    Основные рекомендации по освещению и поливу.
+                </p>
+            </div>
+
+            <div th:if="${s.care != null}" class="species-details-care-grid">
+                <div class="species-details-care-item" th:if="${s.care.lightLevel}">
+                    <div class="muted species-details-care-item__label">Свет</div>
+                    <div class="species-details-care-item__value" th:text="${s.care.lightLevel}">полутень</div>
+                </div>
+
+                <div class="species-details-care-item" th:if="${s.care.waterIntervalDays != null}">
+                    <div class="muted species-details-care-item__label">Полив</div>
+                    <div class="species-details-care-item__value">
+                        <span th:text="${s.care.waterIntervalDays}">7</span><span class="muted"> дней</span>
+                    </div>
+                </div>
+
+                <div class="species-details-care-item species-details-care-item--full"
+                     th:if="${s.care.notes}">
+                    <div class="muted species-details-care-item__label">Заметки</div>
+                    <div class="species-details-care-item__value" th:text="${s.care.notes}">—</div>
+                </div>
+            </div>
+        </section>
+    </section>
+</main>
+
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security"
+      th:replace="~{layouts/base :: layout('Топ капризных видов', '', ~{::main})}">
+
+<main class="container top-capricious-page">
+    <section class="card top-capricious-hero">
+        <span class="badge top-capricious-hero__badge">Подбор по условиям</span>
+        <h1 class="top-capricious-page__title">Топ капризных видов</h1>
+        <p class="muted top-capricious-page__subtitle">
+            Здесь можно найти самые требовательные виды по выбранным условиям и быстро сравнить варианты.
+        </p>
+    </section>
+
+    <section class="card top-capricious-filters-card">
+        <div class="top-capricious-section__head">
+            <h2 class="top-capricious-section__title">Фильтры рейтинга</h2>
+            <p class="muted top-capricious-section__subtitle">
+                Выберите параметры, чтобы показать самые требовательные растения по заданным условиям.
+            </p>
+        </div>
+
+        <form method="get" th:action="@{/app/species/top-capricious}" class="top-capricious-form">
+            <div class="top-capricious-grid">
+                <div class="form-row">
+                    <label for="q">Поиск</label>
+                    <input id="q" name="q" placeholder="название" th:value="${q}"/>
+                </div>
+
+                <div class="form-row">
+                    <label for="light">Свет</label>
+                    <select id="light" name="light">
+                        <option value="" th:selected="${selectedLight == null}">Любой</option>
+                        <option value="яркий свет" th:selected="${selectedLight == 'яркий свет'}">Яркий свет</option>
+                        <option value="полутень" th:selected="${selectedLight == 'полутень'}">Полутень</option>
+                        <option value="тень" th:selected="${selectedLight == 'тень'}">Тень</option>
+                    </select>
+                </div>
+
+
+                <div class="form-row">
+                    <label for="maxWaterInterval">Максимальный интервал полива </label>
+                    <input id="maxWaterInterval" name="maxWaterInterval" inputmode="numeric"
+                           placeholder="например: 10" th:value="${maxWaterInterval}"/>
+                </div>
+
+                <div class="form-row">
+                    <label for="tag">Тег (опционально)</label>
+                    <select id="tag" name="tag">
+                        <option value="" th:selected="${tag == null || #strings.isEmpty(tag)}">Любой</option>
+                        <
+                        <option th:each="t : ${tagOptions}"
+                                th:value="${t.label}"
+                                th:text="${t.label}"
+                                th:selected="${t.selected}">
+                            tag
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="limit">Сколько показать (top N)</label>
+                    <input id="limit" name="limit" inputmode="numeric"
+                           placeholder="по умолчанию: 20" th:value="${limit}"/>
+                </div>
+            </div>
+
+            <div class="top-capricious-actions">
+                <button class="btn btn-primary" type="submit">Показать</button>
+                <a class="btn btn-ghost" th:href="@{/app/species/top-capricious}">Сбросить</a>
+                <a class="btn btn-ghost" th:href="@{/app/species}">Каталог</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card top-capricious-empty"
+             th:if="${species == null || #lists.isEmpty(species)}">
+        <h3 class="top-capricious-empty__title">Ничего не найдено</h3>
+        <p class="muted top-capricious-empty__text">
+            Попробуй изменить параметры поиска или ослабить ограничения.
+        </p>
+    </section>
+
+    <section class="top-capricious-results"
+             th:if="${species != null && !#lists.isEmpty(species)}">
+        <div class="top-capricious-results__head">
+            <h2 class="top-capricious-section__title">Результаты</h2>
+            <p class="muted top-capricious-section__subtitle">
+                Найдено видов: <span th:text="${#lists.size(species)}">0</span>
+            </p>
+        </div>
+
+        <div class="top-capricious-results__list">
+            <div th:each="s : ${species}" class="top-capricious-results__item">
+                <div th:replace="~{fragments/components :: speciesCard(${s})}"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</html>

@@ -1,0 +1,2 @@
+ALTER TABLE plant_species
+    ADD COLUMN IF NOT EXISTS image_lookup_attempted BOOLEAN NOT NULL DEFAULT FALSE;
