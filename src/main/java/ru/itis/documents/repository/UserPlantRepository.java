@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.itis.documents.domain.entity.UserPlant;
 import ru.itis.documents.domain.enums.CareActionType;
-import ru.itis.documents.dto.view.StaleWateringPlantRawView;
 
 import java.time.OffsetDateTime;
 import java.util.List;

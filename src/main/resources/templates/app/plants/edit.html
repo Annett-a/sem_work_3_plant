@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Редактировать растение', '', ~{::main})}">
+
+<main class="container edit-plant-page">
+    <section class="card edit-plant-hero">
+        <span class="badge edit-plant-hero__badge">Изменение карточки</span>
+        <h1 class="edit-plant-page__title">Редактировать растение</h1>
+        <p class="muted edit-plant-page__subtitle">
+            Здесь можно изменить основные данные UserPlant: название, вид, комнату, дату покупки и заметки.
+        </p>
+    </section>
+
+    <section class="card edit-plant-form-card">
+        <div class="edit-plant-form-card__head">
+            <div>
+                <h2 class="edit-plant-section__title">Основные данные</h2>
+                <p class="muted edit-plant-section__subtitle">
+                    Все изменения будут сохранены в существующей карточке растения.
+                </p>
+            </div>
+        </div>
+
+        <form method="post"
+              th:action="@{/app/plants/{id}(id=${id})}"
+              th:object="${form}"
+              class="edit-plant-form">
+
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div th:replace="~{fragments/components :: formToken}"></div>
+
+            <div th:replace="~{fragments/components :: formErrors}"></div>
+
+            <div class="edit-plant-grid">
+                <div class="form-row">
+                    <label for="nickname">Название (как в комнате)</label>
+                    <input id="nickname" th:field="*{nickname}"/>
+                    <div class="error-text" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">err</div>
+                </div>
+
+                <div class="form-row">
+                    <label for="speciesId">Вид растения</label>
+                    <select id="speciesId" th:field="*{speciesId}">
+                        <option th:each="o : ${speciesOptions}"
+                                th:value="${o.id}"
+                                th:text="${o.label}">вид
+                        </option>
+                    </select>
+                    <div class="error-text" th:if="${#fields.hasErrors('speciesId')}" th:errors="*{speciesId}">err</div>
+                </div>
+
+                <div class="form-row">
+                    <label for="roomId">Комната (необязательно)</label>
+                    <select id="roomId" th:field="*{roomId}">
+                        <option value="">— не выбрано —</option>
+                        <option th:each="o : ${roomOptions}"
+                                th:value="${o.id}"
+                                th:text="${o.label}">комната
+                        </option>
+                    </select>
+                    <div class="error-text" th:if="${#fields.hasErrors('roomId')}" th:errors="*{roomId}">err</div>
+                </div>
+
+                <div class="form-row">
+                    <label for="purchaseDate">Дата покупки (необязательно)</label>
+                    <input id="purchaseDate" type="date" th:field="*{purchaseDate}"/>
+                    <div class="error-text" th:if="${#fields.hasErrors('purchaseDate')}" th:errors="*{purchaseDate}">
+                        err
+                    </div>
+                </div>
+
+                <div class="form-row edit-plant-notes-field">
+                    <label for="notes">Заметки (необязательно)</label>
+                    <textarea id="notes" th:field="*{notes}" rows="5"></textarea>
+                    <div class="error-text" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}">err</div>
+                </div>
+            </div>
+
+            <div class="edit-plant-actions">
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+                <a class="btn" th:href="@{/app/plants/{id}(id=${id})}">Назад</a>
+                <a class="btn btn-ghost" th:href="@{/app/plants}">К списку</a>
+            </div>
+        </form>
+    </section>
+</main>
+</html>

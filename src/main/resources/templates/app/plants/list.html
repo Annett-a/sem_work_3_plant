@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Мои растения', '', ~{::main})}">
+
+<main class="container plants-page">
+    <section class="card plants-hero">
+        <span class="badge plants-hero__badge">Домашняя оранжерея</span>
+        <h1 class="plants-page__title">Мои растения</h1>
+        <p class="muted plants-page__subtitle">
+            Здесь хранится персональная коллекция растений. Можно открывать карточки, редактировать данные
+            и отслеживать уход для каждого экземпляра.
+        </p>
+    </section>
+
+    <div class="alert ok" th:if="${msg != null}" th:text="${msg}">ok</div>
+
+    <section class="card plants-actions-card">
+        <div class="plants-actions-card__content">
+            <div class="plants-actions-card__text">
+                <h2 class="plants-section__title">Управление коллекцией</h2>
+                <p class="muted plants-section__subtitle">
+                    Добавляй новые растения, открывай существующие карточки и поддерживай список в актуальном состоянии.
+                </p>
+            </div>
+
+            <div class="plants-actions">
+                <a class="btn btn-primary" th:href="@{/app/plants/new}">Добавить растение</a>
+                <a class="btn btn-ghost" th:href="@{/app}">Назад</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="card plants-empty"
+             th:if="${plants == null || #lists.isEmpty(plants)}">
+        <h3 class="plants-empty__title">Пока пусто</h3>
+        <p class="muted plants-empty__text">
+            В коллекции ещё нет растений. Можно добавить первое и начать вести уход.
+        </p>
+        <div class="plants-empty__actions">
+            <a class="btn btn-primary" th:href="@{/app/plants/new}">Добавить первое растение</a>
+        </div>
+    </section>
+
+    <section class="plants-results"
+             th:if="${plants != null && !#lists.isEmpty(plants)}">
+        <div class="plants-results__head">
+            <h2 class="plants-section__title">Моя коллекция</h2>
+            <p class="muted plants-section__subtitle">
+                Всего растений: <span th:text="${#lists.size(plants)}">0</span>
+            </p>
+        </div>
+
+        <div class="plants-results__list">
+            <div th:each="p : ${plants}" class="plants-results__item">
+                <div th:replace="~{fragments/components :: userPlantCard(${p})}"></div>
+            </div>
+        </div>
+    </section>
+</main>
+</html>

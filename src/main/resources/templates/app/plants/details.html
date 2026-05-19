@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:plant="http://www.example.com/plant"
+      th:replace="~{layouts/base :: layout('Карточка растения', '', ~{::main})}">
+
+<main class="container plant-details-page">
+    <section class="card plant-details-hero">
+        <span class="badge plant-details-hero__badge">Карточка растения</span>
+        <h1 class="plant-details-page__title">Моё растение</h1>
+        <p class="muted plant-details-page__subtitle">
+            Здесь собрана основная информация о растении, ближайший полив, задачи ухода,
+            фотографии и быстрые действия по карточке.
+        </p>
+    </section>
+
+    <div class="alert ok" th:if="${msg != null}" th:text="${msg}">ok</div>
+
+    <section class="card plant-details-card">
+        <div class="plant-details-card__top">
+            <div class="plant-details-card__head">
+                <h2 class="plant-details-card__title" th:text="${p.nickname}">nickname</h2>
+                <div class="muted plant-details-card__species"
+                     th:if="${p.speciesName}"
+                     th:text="${p.speciesName}">species
+                </div>
+                <div class="muted plant-details-card__latin"
+                     th:if="${p.speciesLatinName}"
+                     th:text="${p.speciesLatinName}">latin
+                </div>
+            </div>
+
+            <div class="plant-details-card__badges">
+                <plant:capric-badge value="${p.cap}"></plant:capric-badge>
+                <span class="badge" th:if="${p.roomName}" th:text="${p.roomName}">Комната</span>
+            </div>
+        </div>
+
+        <div class="plant-details-water-row">
+            <div id="nextWateringText"
+                 class="muted plant-details-next-watering"
+                 th:text="${p.nextWateringText}">Полив
+            </div>
+
+            <button type="button"
+                    id="btnWaterNow"
+                    class="btn btn-primary"
+                    th:attr="data-plant-id=${p.id}">
+                Полил
+            </button>
+        </div>
+
+        <div id="waterAjaxStatus" class="muted plant-details-status"></div>
+        <div id="waterAjaxError" class="alert error plant-details-error" hidden></div>
+
+        <div class="plant-details-stats">
+            <div class="plant-details-stat" th:if="${p.waterIntervalDays != null}">
+                <span class="muted plant-details-stat__label">Интервал полива:</span>
+                <span class="plant-details-stat__value" th:text="${p.waterIntervalDays}">7</span>
+                <span class="muted"> дн.</span>
+            </div>
+
+            <div class="plant-details-stat" th:if="${p.lightLevel != null}">
+                <span class="muted plant-details-stat__label">Свет:</span>
+                <span class="plant-details-stat__value" th:text="${p.lightLevel}">полутень</span>
+            </div>
+
+            <div class="plant-details-stat" th:if="${p.purchaseDate}">
+                <span class="muted plant-details-stat__label">Куплено:</span>
+                <span class="plant-details-stat__value" th:text="${p.purchaseDate}">Дата</span>
+            </div>
+        </div>
+
+        <div class="plant-details-notes" th:if="${p.notes}">
+            <div class="plant-details-block-title">Заметки</div>
+            <div class="plant-details-notes__text" th:text="${p.notes}">notes</div>
+        </div>
+    </section>
+
+    <section class="plant-details-grid">
+        <article class="card plant-details-panel">
+            <div class="plant-details-panel__head">
+                <h2 class="plant-details-panel__title">Задачи ухода</h2>
+                <p class="muted plant-details-panel__subtitle">
+                    Список ближайших задач, связанных с этим растением.
+                </p>
+            </div>
+
+            <div id="tasksBlock">
+                <div th:if="${p.tasks == null || #lists.isEmpty(p.tasks)}"
+                     id="tasksEmpty"
+                     class="muted plant-details-empty">
+                    Пока нет задач.
+                </div>
+
+                <div th:if="${p.tasks != null && !#lists.isEmpty(p.tasks)}"
+                     id="tasksList"
+                     class="plant-details-task-list">
+                    <article th:each="t : ${p.tasks}" class="plant-details-task-row">
+                        <div class="plant-details-task-row__top">
+                            <div class="plant-details-task-row__type" th:text="${t.typeLabel}">Полив</div>
+                            <div class="muted plant-details-task-row__date"
+                                 th:text="${t.dueDate != null ? #temporals.format(t.dueDate, 'dd.MM.yyyy') : '—'}">date
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </article>
+
+        <article class="card plant-details-panel">
+            <div class="plant-details-panel__head">
+                <h2 class="plant-details-panel__title">Фото</h2>
+                <p class="muted plant-details-panel__subtitle">
+                    Загруженные снимки растения и быстрый переход в фотодневник.
+                </p>
+            </div>
+
+            <div th:if="${photos == null || #lists.isEmpty(photos)}"
+                 class="muted plant-details-empty">
+                Пока нет фото.
+            </div>
+
+            <div th:if="${photos != null && !#lists.isEmpty(photos)}"
+                 class="plant-details-photo-grid">
+                <img th:each="ph : ${photos}"
+                     th:src="@{/app/plants/photos/{pid}(pid=${ph.id})}"
+                     th:alt="${ph.originalName != null ? ph.originalName : 'photo'}"
+                     class="plant-details-photo"/>
+            </div>
+
+            <form method="post"
+                  enctype="multipart/form-data"
+                  th:action="@{/app/plants/{id}/photos(id=${p.id})}"
+                  th:object="${photoForm}"
+                  class="plant-details-upload-form">
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <div th:replace="~{fragments/components :: formToken}"></div>
+
+                <div class="form-row plant-details-upload-field">
+                    <label for="photoUpload">Загрузить фото</label>
+                    <input id="photoUpload" type="file" th:field="*{photo}" accept="image/*" required>
+                    <div class="alert error" th:if="${#fields.hasErrors('photo')}" th:errors="*{photo}">err</div>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Загрузить</button>
+            </form>
+        </article>
+    </section>
+
+    <section class="card plant-details-actions-card">
+        <div class="plant-details-actions">
+            <a class="btn btn-primary" th:href="@{/app/plants/{id}/edit(id=${p.id})}">Редактировать</a>
+            <a class="btn" th:href="@{/app/plants/{id}/photos(id=${p.id})}">Фотодневник</a>
+            <a class="btn" th:href="@{/app/plants/{id}/events(id=${p.id})}">Журнал ухода</a>
+            <a class="btn btn-ghost" th:href="@{/app/plants/{id}/delete(id=${p.id})}">Удалить</a>
+            <a class="btn" th:href="@{/app/plants}">К списку</a>
+        </div>
+    </section>
+
+    <input type="hidden" id="csrfToken" th:value="${_csrf.token}"/>
+    <input type="hidden" id="csrfHeader" th:value="${_csrf.headerName}"/>
+
+    <script th:src="@{/js/userplant-water-ajax.js}"></script>
+</main>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Удалить растение', '', ~{::main})}">
+
+<main class="container">
+    <h1 class="u-mt-0">Удалить растение</h1>
+    <div class="muted">Подтверждение удаления.</div>
+
+    <div class="card u-p-14">
+        <div class="u-font-700" th:text="${p.nickname}">nickname</div>
+        <div class="muted" th:if="${p.speciesName}" th:text="${p.speciesName}">species</div>
+
+        <div class="alert error u-mt-12">
+            Действие необратимо: растение будет удалено вместе со связанными задачами/событиями/фото.
+        </div>
+
+        <form method="post" th:action="@{/app/plants/{id}/delete(id=${p.id})}"
+              class="u-mt-14 u-flex u-gap-10 u-flex-wrap">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div th:replace="~{fragments/components :: formToken}"></div>
+
+            <button class="primary" type="submit">Удалить</button>
+            <a class="btn" th:href="@{/app/plants/{id}(id=${p.id})}">Отмена</a>
+            <a class="btn btn-ghost" th:href="@{/app/plants}">К списку</a>
+        </form>
+    </div>
+
+</main>
+</html>
