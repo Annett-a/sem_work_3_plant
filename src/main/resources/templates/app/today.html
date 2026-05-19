@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Сегодня', '', ~{::main})}">
+
+<main class="container today-page">
+    <section class="card today-hero">
+        <span class="badge today-hero__badge">Дашборд ухода</span>
+        <h1 class="today-page__title">Сегодня</h1>
+        <p class="muted today-page__subtitle">
+            Здесь собраны растения, которым уже давно не хватало полива. Порог можно менять,
+            чтобы быстро отслеживать наиболее важные задачи по уходу.
+        </p>
+    </section>
+
+    <section class="card today-filter-card">
+        <div class="today-filter-card__content">
+            <div class="today-filter-card__text">
+                <h2 class="today-section__title">Без полива</h2>
+                <p class="muted today-section__subtitle">
+                    Растения, которые не поливали
+                    <b><span th:text="${noWaterDays}">7</span></b>
+                    дней и больше.
+                </p>
+            </div>
+
+            <form method="get" th:action="@{/app/today}" class="today-filter-form">
+                <div class="today-filter-form__field">
+                    <label class="muted" for="noWaterDays">Порог (дней)</label>
+                    <input id="noWaterDays"
+                           name="noWaterDays"
+                           type="number"
+                           min="1"
+                           max="365"
+                           th:value="${noWaterDays}"/>
+                </div>
+
+                <div class="today-filter-form__actions">
+                    <button class="btn btn-primary" type="submit">Показать</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="card today-empty"
+             th:if="${noWaterPlants == null || #lists.isEmpty(noWaterPlants)}">
+        <h3 class="today-empty__title">Пусто</h3>
+        <p class="muted today-empty__text">
+            Сейчас нет растений, которые давно не поливали.
+        </p>
+    </section>
+
+    <section class="today-results"
+             th:if="${noWaterPlants != null && !#lists.isEmpty(noWaterPlants)}">
+        <article th:each="p : ${noWaterPlants}" class="card today-plant-card">
+            <div class="today-plant-card__top">
+                <div class="today-plant-card__main">
+                    <div class="today-plant-card__title-row">
+                        <h3 class="today-plant-card__title">
+                            <a th:href="@{/app/plants/{id}(id=${p.plantId})}" th:text="${p.nickname}">Растение</a>
+                        </h3>
+
+                        <div class="badge today-plant-card__badge">
+                            <span th:text="${p.daysWithoutWatering}">0</span> дн. без полива
+                        </div>
+                    </div>
+
+                    <div class="muted today-plant-card__species"
+                         th:if="${p.speciesName}"
+                         th:text="${p.speciesName}">Вид
+                    </div>
+
+                    <div class="muted today-plant-card__date" th:if="${p.lastWaterTime != null}">
+                        Последний полив:
+                        <span th:text="${#temporals.format(p.lastWaterTime, 'dd.MM.yyyy HH:mm')}">time</span>
+                    </div>
+
+                    <div class="muted today-plant-card__date" th:if="${p.lastWaterTime == null}">
+                        Поливов ещё не было
+                    </div>
+                </div>
+            </div>
+
+            <div class="today-plant-card__footer">
+                <a class="btn btn-primary" th:href="@{/app/plants/{id}(id=${p.plantId})}">
+                    Открыть растение
+                </a>
+                <a class="btn btn-ghost" th:href="@{/app/plants/{id}/events(id=${p.plantId})}">
+                    Журнал ухода
+                </a>
+            </div>
+        </article>
+    </section>
+</main>
+
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Журнал ухода', '', ~{::main})}">
+
+<main class="container plant-events-page">
+    <section class="card plant-events-hero">
+        <span class="badge plant-events-hero__badge">История ухода</span>
+        <h1 class="plant-events-page__title">Журнал ухода</h1>
+        <p class="muted plant-events-page__subtitle">
+            Здесь можно добавить новое событие полива и просмотреть историю уже выполненных действий.
+        </p>
+    </section>
+
+    <div class="alert ok" th:if="${msg != null}" th:text="${msg}">ok</div>
+
+    <section class="card plant-events-form-card">
+        <div class="plant-events-section__head">
+            <h2 class="plant-events-section__title">Добавить событие: полив</h2>
+            <p class="muted plant-events-section__subtitle">
+                Отметка о поливе сразу попадёт в журнал ухода для этого растения.
+            </p>
+        </div>
+
+        <form method="post" th:action="@{/app/plants/{id}/events/water(id=${plantId})}" th:object="${form}"
+              class="plant-events-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <div th:replace="~{fragments/components :: formToken}"></div>
+
+            <div th:replace="~{fragments/components :: formErrors}"></div>
+
+            <div class="form-row plant-events-comment-field">
+                <label for="comment">Комментарий (необязательно)</label>
+                <textarea id="comment" th:field="*{comment}" rows="4"></textarea>
+                <div class="error-text" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}">err</div>
+            </div>
+
+            <div class="plant-events-actions">
+                <button class="btn btn-primary" type="submit">Отметить полив</button>
+                <a class="btn" th:href="@{/app/plants/{id}(id=${plantId})}">Назад к растению</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card plant-events-list-card">
+        <div class="plant-events-section__head">
+            <h2 class="plant-events-section__title">События</h2>
+            <p class="muted plant-events-section__subtitle">
+                История всех зафиксированных действий по уходу.
+            </p>
+        </div>
+
+        <div th:if="${events == null || #lists.isEmpty(events)}" class="muted plant-events-empty">
+            Пока нет событий ухода.
+        </div>
+
+        <div th:if="${events != null && !#lists.isEmpty(events)}" class="plant-events-list">
+            <article th:each="e : ${events}" class="card plant-events-item">
+                <div class="plant-events-item__top">
+                    <div class="plant-events-item__type" th:text="${e.type}">WATER</div>
+                    <div class="muted plant-events-item__time"
+                         th:text="${#temporals.format(e.eventTime, 'dd.MM.yyyy HH:mm')}">time
+                    </div>
+                </div>
+
+                <div th:if="${e.comment}" class="muted plant-events-item__comment" th:text="${e.comment}">
+                    comment
+                </div>
+            </article>
+        </div>
+    </section>
+</main>
+</html>
