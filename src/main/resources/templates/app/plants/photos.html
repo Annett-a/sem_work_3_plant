@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Фотодневник', '', ~{::main})}">
+
+<main class="container plant-photos-page">
+    <section class="card plant-photos-hero">
+        <span class="badge plant-photos-hero__badge">Фотодневник</span>
+        <h1 class="plant-photos-page__title">Фото растения</h1>
+        <p class="muted plant-photos-page__subtitle">
+            Здесь можно просматривать загруженные фотографии, распознавать растение по снимку
+            и искать карточку вида по найденному названию.
+        </p>
+
+        <div class="muted plant-photos-page__plant" th:if="${p != null}">
+            <span th:text="${p.displayName}">Plant</span>
+            <span th:if="${p.displaySpeciesLatinName != null}">
+        (<span th:text="${p.displaySpeciesLatinName}">latin</span>)
+            </span>
+        </div>
+    </section>
+
+    <div class="alert ok" th:if="${msg != null}" th:text="${msg}">ok</div>
+
+    <section class="card plant-photos-identify-card">
+        <div class="plant-photos-section__head">
+            <h2 class="plant-photos-section__title">Распознавание растения</h2>
+            <p class="muted plant-photos-section__subtitle">
+                Сначала можно распознать фото, а затем вручную найти карточку вида по названию.
+            </p>
+        </div>
+
+        <div id="plantnetStatus" class="muted plant-photos-status"></div>
+        <div id="plantnetError" class="alert error plant-photos-error" hidden></div>
+        <div id="plantnetSelected" class="muted plant-photos-selected"></div>
+        <div id="plantnetCandidates" class="candidate-box plant-photos-candidates"></div>
+    </section>
+
+    <section id="perenualSearchWrap" class="card plant-photos-search-card">
+        <div class="plant-photos-section__head">
+            <h2 class="plant-photos-section__title">Поиск карточки растения</h2>
+            <p class="muted plant-photos-section__subtitle">
+                Название можно ввести вручную или подставить после распознавания.
+            </p>
+        </div>
+
+        <div class="plant-photos-search-row">
+            <input id="perenualSearchQuery"
+                   class="input plant-photos-search-input"
+                   type="text"
+                   placeholder="Например: Spathiphyllum wallisii">
+            <button id="perenualSearchBtn" type="button" class="btn btn-primary">Найти карточку</button>
+        </div>
+
+        <div id="perenualSearchStatus" class="muted plant-photos-status"></div>
+        <div id="perenualSearchError" class="alert error plant-photos-error" hidden></div>
+        <div id="perenualSearchCard" class="plant-photos-search-result"></div>
+    </section>
+
+    <section class="card plant-photos-gallery-card">
+        <div class="plant-photos-section__head">
+            <h2 class="plant-photos-section__title">Галерея</h2>
+            <p class="muted plant-photos-section__subtitle">
+                Снимки растения с возможностью распознавания и удаления.
+            </p>
+        </div>
+
+        <div th:if="${photos == null || #lists.isEmpty(photos)}" class="muted plant-photos-empty">
+            Пока нет фото. Можно загрузить фото на карточке растения.
+        </div>
+
+        <div th:if="${photos != null && !#lists.isEmpty(photos)}"
+             class="plant-photos-grid">
+
+            <article th:each="ph : ${photos}" class="card plant-photos-item">
+                <img th:src="@{/app/plants/photos/{pid}(pid=${ph.id})}"
+                     th:alt="${ph.originalName != null ? ph.originalName : 'photo'}"
+                     class="plant-photos-item__image"/>
+
+                <div class="muted plant-photos-item__meta"
+                     th:text="${#temporals.format(ph.uploadedAt, 'dd.MM.yyyy HH:mm')}">time
+                </div>
+
+                <div class="muted plant-photos-item__meta"
+                     th:if="${ph.originalName}"
+                     th:text="${ph.originalName}">name
+                </div>
+
+                <div class="plant-photos-item__actions">
+                    <button type="button"
+                            class="btn btn-primary js-identify-photo"
+                            th:attr="data-photo-id=${ph.id}">
+                        Распознать
+                    </button>
+
+                    <form method="post"
+                          th:action="@{/app/plants/{id}/photos/{photoId}/delete(id=${p.id}, photoId=${ph.id})}"
+                          class="plant-photos-delete-form">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div th:replace="~{fragments/components :: formToken}"></div>
+
+                        <button class="btn btn-ghost" type="submit">
+                            Удалить
+                        </button>
+                    </form>
+                </div>
+            </article>
+        </div>
+
+        <div class="plant-photos-actions">
+            <a class="btn" th:href="@{/app/plants/{id}(id=${p.id})}">Назад к растению</a>
+            <a class="btn" th:href="@{/app/plants}">К списку</a>
+        </div>
+    </section>
+
+    <script th:src="@{/js/identify-perenual-search.js}" defer></script>
+    <script th:src="@{/js/identify-photo-plantnet.js}" defer></script>
+</main>
+</html>
