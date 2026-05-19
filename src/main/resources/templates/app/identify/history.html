@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('История распознаваний', '', ~{::main})}">
+
+<main class="container">
+    <div class="page-head">
+        <div>
+            <h1>История распознаваний</h1>
+            <p class="muted">Последние попытки распознавания.</p>
+        </div>
+        <div>
+            <a class="btn primary" th:href="@{/app/identify}">+ Новое распознавание</a>
+        </div>
+    </div>
+
+    <div class="u-grid u-grid-gap-12 u-mt-14">
+        <a th:each="it : ${items}" th:href="@{/app/identify/{id}(id=${it.id})}"
+           class="card u-p-14 u-no-decoration">
+            <div class="u-flex u-items-center u-justify-between u-gap-12 u-flex-wrap">
+                <div class="u-font-800" th:text="${it.bestMatch}">Best match</div>
+                <div class="muted" th:text="${it.status}">STATUS</div>
+            </div>
+            <div class="muted u-mt-6" th:text="${it.createdAt}">date</div>
+        </a>
+
+        <div class="empty" th:if="${items == null || #lists.isEmpty(items)}">
+            <div class="empty__title">Пока пусто</div>
+            <div class="muted">Сделай первое распознавание.</div>
+        </div>
+    </div>
+</main>
+</html>

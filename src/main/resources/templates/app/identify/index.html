@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Распознавание по фото', '', ~{::main})}">
+
+<main class="container identify-page">
+    <section class="card identify-hero">
+        <span class="badge identify-hero__badge">Фото + поиск растения</span>
+        <h1 class="identify-page__title">Распознавание по фото</h1>
+        <p class="muted identify-page__subtitle">
+            Загрузите фото растения, получите возможные варианты названия и используйте их
+            для поиска карточки растения в каталоге.
+        </p>
+    </section>
+
+    <section class="card identify-step-card">
+        <div class="identify-step-card__head">
+            <div>
+                <h2 class="identify-section__title">Шаг 1. Распознавание изображения</h2>
+                <p class="muted identify-section__subtitle">
+                    Загрузи фото растения, получи список кандидатов и выбери подходящее название для поиска ниже.
+                </p>
+            </div>
+        </div>
+
+        <div class="identify-upload-block">
+            <div class="form-row identify-file-field">
+                <label for="plantnetFile">Фото растения</label>
+                <input id="plantnetFile" type="file" accept="image/jpeg,image/png"/>
+            </div>
+
+            <div class="identify-actions">
+                <button id="plantnetBtn" type="button" class="btn btn-primary">Распознать</button>
+            </div>
+        </div>
+
+        <div id="plantnetStatus" class="muted identify-status"></div>
+        <div id="plantnetError" class="alert error identify-error" hidden></div>
+
+        <div class="identify-candidates-block">
+            <div class="identify-candidates-block__head">
+                <h3 class="identify-subtitle">Кандидаты</h3>
+                <p class="muted identify-help-text">
+                    Нажатие на кандидата только подставляет название в поиск ниже.
+                </p>
+            </div>
+
+            <div id="plantnetCandidates" class="candidate-box identify-candidates"></div>
+        </div>
+
+        <div id="plantnetSelected" class="muted identify-selected"></div>
+    </section>
+
+    <section id="perenualSearchWrap" class="card identify-search-card">
+        <div class="identify-search-card__head">
+            <div>
+                <h2 class="identify-section__title">Шаг 2. Поиск карточки растения</h2>
+                <p class="muted identify-section__subtitle">
+                    Введи найденное название вручную или выбери его из кандидатов выше.
+                </p>
+            </div>
+        </div>
+
+        <div class="identify-search-row">
+            <input id="perenualSearchQuery"
+                   class="input identify-search-input"
+                   type="text"
+                   placeholder="Например: Monstera deliciosa">
+            <button id="perenualSearchBtn" type="button" class="btn btn-primary">Найти карточку</button>
+        </div>
+
+        <div id="perenualSearchStatus" class="muted identify-status"></div>
+        <div id="perenualSearchError" class="alert error identify-error" hidden></div>
+        <div id="perenualSearchCard" class="identify-search-result"></div>
+    </section>
+
+    <script th:src="@{/js/identify-perenual-search.js}" defer></script>
+    <script th:src="@{/js/identify-plantnet-ajax.js}" defer></script>
+</main>
+</html>
