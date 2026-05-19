@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  flyway:
+    enabled: true
+
+app:
+  oauth:
+    google:
+      enabled: false
+      clientId: test
+      clientSecret: test
+      redirectUri: http://localhost/auth/oauth/google/callback
+      discoveryUri: http://localhost/.well-known/openid-configuration
+      scope: openid email profile
+
+  perenual:
+    apiKey: test
+
+  plantnet:
+    apiKey: test
+    project: all
+    baseUrl: http://localhost
+    lang: en
+    nbResults: 7

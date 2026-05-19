@@ -2,7 +2,6 @@ spring:
   profiles:
     default: dev
 
-  # Этап 7.1 (P0): чтобы 404/ресурсы попадали в @ControllerAdvice, а не в Whitelabel
   mvc:
     throw-exception-if-no-handler-found: true
 
@@ -11,6 +10,10 @@ spring:
 
   flyway:
     enabled: true
+
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/sem3_files}
 
   servlet:
     multipart:
@@ -28,8 +31,14 @@ app:
     lang: ${PLANTNET_LANG:en}
     nbResults: ${PLANTNET_NB_RESULTS:7}
 
-  storage:
-    baseDir: ${APP_STORAGE_DIR:./data}
+  oauth:
+    google:
+      enabled: ${GOOGLE_OAUTH_ENABLED:true}
+      clientId: ${GOOGLE_OAUTH_CLIENT_ID:}
+      clientSecret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+      redirectUri: ${GOOGLE_OAUTH_REDIRECT_URI:http://localhost:8080/auth/oauth/google/callback}
+      discoveryUri: ${GOOGLE_OAUTH_DISCOVERY_URI:https://accounts.google.com/.well-known/openid-configuration}
+      scope: ${GOOGLE_OAUTH_SCOPE:openid email profile}
 
 server:
   error:

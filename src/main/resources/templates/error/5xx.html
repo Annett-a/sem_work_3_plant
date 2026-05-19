@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Ошибка сервера', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge" th:text="${status != null ? status : '5xx'}">5xx</span>
+        <h1 class="error-page__title">Ошибка сервера</h1>
+        <p class="muted error-page__subtitle">
+            Во время обработки запроса произошла внутренняя ошибка.
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Нужно повторить попытку позже. Если ошибка повторяется, её стоит проверить по логам.
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+        </div>
+    </section>
+</main>
+
+</html>

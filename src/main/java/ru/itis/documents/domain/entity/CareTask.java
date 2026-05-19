@@ -1,7 +1,11 @@
 package ru.itis.documents.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import ru.itis.documents.domain.enums.CareActionType;
 import ru.itis.documents.domain.enums.CareTaskStatus;
 

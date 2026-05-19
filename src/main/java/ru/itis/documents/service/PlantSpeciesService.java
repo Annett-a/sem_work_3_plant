@@ -1,16 +1,23 @@
 package ru.itis.documents.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
 import ru.itis.documents.domain.entity.CareProfile;
 import ru.itis.documents.domain.entity.PlantSpecies;
 import ru.itis.documents.domain.entity.Tag;
-import ru.itis.documents.domain.enums.LightLevel;
+import ru.itis.documents.dto.view.CapriciousnessView;
+import ru.itis.documents.dto.view.CareProfileView;
+import ru.itis.documents.dto.view.PlantSpeciesView;
 import ru.itis.documents.repository.PlantSpeciesRepository;
+import ru.itis.documents.domain.enums.LightLevel;
 import ru.itis.documents.repository.TagRepository;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

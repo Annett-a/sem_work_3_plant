@@ -1,7 +1,11 @@
 package ru.itis.documents.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.OffsetDateTime;
 import java.util.HashSet;
@@ -60,6 +64,10 @@ public class PlantSpecies {
         this.createdAt = OffsetDateTime.now();
 
     }
+
     @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
+
+    @Column(name = "image_lookup_attempted", nullable = false)
+    private boolean imageLookupAttempted;
 }

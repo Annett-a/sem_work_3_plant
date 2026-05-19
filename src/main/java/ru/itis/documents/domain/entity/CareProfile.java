@@ -1,7 +1,11 @@
 package ru.itis.documents.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -18,7 +22,6 @@ public class CareProfile {
     @ToString.Include
     private Long id;
 
-    // O2O: species_id UNIQUE в БД
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "species_id", nullable = false, unique = true)
     @ToString.Exclude

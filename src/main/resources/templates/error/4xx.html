@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('Ошибка запроса', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge" th:text="${status != null ? status : '4xx'}">4xx</span>
+        <h1 class="error-page__title">Ошибка запроса</h1>
+        <p class="muted error-page__subtitle">
+            Не удалось обработать запрос:
+            <span th:text="${path != null ? path : '/'}">/</span>
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Запрос не был выполнен. Нужно проверить адрес, метод запроса и передаваемые данные.
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+        </div>
+    </section>
+</main>
+
+</html>

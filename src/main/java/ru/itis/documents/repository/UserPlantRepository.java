@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.itis.documents.domain.entity.UserPlant;
 import ru.itis.documents.domain.enums.CareActionType;
+import ru.itis.documents.dto.view.StaleWateringPlantRawView;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -19,12 +20,6 @@ public interface UserPlantRepository extends JpaRepository<UserPlant, Long> {
     @EntityGraph(attributePaths = {"species", "species.tags", "species.careProfile", "room"})
     Optional<UserPlant> findByIdAndUser_Id(Long id, Long userId);
 
-    /**
-     * Этап 9.4 (P0): запрос с подзапросом.
-     *
-     * "Мои растения без полива N дней": последний CareEvent(WATER) раньше cutoff (или полива не было).
-     * Подзапрос: (select max(e.eventTime) ...)
-     */
     @Query("""
             select new ru.itis.documents.dto.view.StaleWateringPlantRawView(
               p.id,

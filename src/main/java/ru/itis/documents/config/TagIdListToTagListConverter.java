@@ -6,7 +6,12 @@ import org.springframework.stereotype.Component;
 import ru.itis.documents.domain.entity.Tag;
 import ru.itis.documents.repository.TagRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor

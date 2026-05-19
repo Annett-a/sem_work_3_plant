@@ -22,13 +22,11 @@ public enum LightLevel {
         String s = raw.trim().toLowerCase(Locale.ROOT);
         if (s.isEmpty()) return null;
 
-        // принимаем и enum-имена, и русские значения из формы
         for (LightLevel v : values()) {
             if (v.name().equalsIgnoreCase(raw)) return v;
             if (v.ruLabel.toLowerCase(Locale.ROOT).equals(s)) return v;
         }
 
-        // мягкие синонимы (чтобы не падало из-за вариаций)
         if (s.contains("ярк")) return BRIGHT;
         if (s.contains("полут")) return PART_SHADE;
         if (s.contains("тен")) return SHADE;

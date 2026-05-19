@@ -8,6 +8,7 @@ import org.thymeleaf.standard.expression.IStandardExpressionParser;
 import org.thymeleaf.standard.expression.StandardExpressions;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.unbescape.html.HtmlEscape;
+import ru.itis.documents.dto.view.CapriciousnessView;
 
 public class CapricBadgeTagProcessor extends AbstractElementTagProcessor {
 

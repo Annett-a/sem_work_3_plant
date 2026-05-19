@@ -1,8 +1,7 @@
--- V6__plantnet_cache.sql
 -- 4.5.4 (P1): кэш распознаваний по фото + сохранение остатка квоты Pl@ntNet
 
 ALTER TABLE plant_identifications
-    ADD COLUMN IF NOT EXISTS photo_hash VARCHAR(64);
+    ADD COLUMN IF NOT EXISTS photo_hash VARCHAR (64);
 
 ALTER TABLE plant_identifications
     ADD COLUMN IF NOT EXISTS plantnet_remaining_requests INTEGER;

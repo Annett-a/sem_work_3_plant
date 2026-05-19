@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout(${title}, '', ~{::main})}">
+
+<main class="container integration-error-page">
+    <section class="card integration-error-hero">
+        <span class="badge integration-error-hero__badge">External service</span>
+        <h1 class="integration-error-page__title" th:text="${title}">Ошибка внешнего сервиса</h1>
+        <p class="muted integration-error-page__subtitle">
+            Внешний сервис временно недоступен или вернул ошибку. Можно вернуться назад и попробовать ещё раз позже.
+        </p>
+    </section>
+
+    <section class="card integration-error-card">
+        <div class="alert error integration-error-alert">
+            <div class="integration-error-alert__title">
+                Код: <span th:text="${code}">INTEGRATION_ERROR</span>
+            </div>
+
+            <div class="integration-error-alert__message" th:text="${message}">
+                Внешний сервис временно недоступен. Попробовать позже.
+            </div>
+
+            <div class="muted integration-error-alert__details"
+                 th:if="${details != null}">
+                <span th:text="${details}">details</span>
+            </div>
+        </div>
+
+        <div class="error-actions">
+            <a class="btn btn-primary"
+               th:href="${backUrl != null and !#strings.isEmpty(backUrl) ? backUrl : '/'}">Назад</a>
+            <a class="btn btn-ghost" th:href="@{/}">На главную</a>
+        </div>
+    </section>
+</main>
+</html>

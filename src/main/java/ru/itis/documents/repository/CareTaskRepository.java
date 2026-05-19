@@ -1,10 +1,10 @@
 package ru.itis.documents.repository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.itis.documents.domain.entity.CareTask;
 import ru.itis.documents.domain.enums.CareActionType;
 import ru.itis.documents.domain.enums.CareTaskStatus;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,6 +21,7 @@ public interface CareTaskRepository extends JpaRepository<CareTask, Long> {
             CareActionType type,
             CareTaskStatus status
     );
+
     @EntityGraph(attributePaths = {"userPlant", "userPlant.species"})
     List<CareTask> findAllByUserPlant_User_IdAndStatusAndDueDateIsNotNullAndDueDateLessThanEqualOrderByDueDateAsc(
             Long userId,

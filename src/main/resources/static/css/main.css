@@ -1,11 +1,11 @@
 :root {
-    --bg: #2F3E34; /* тёмный мох — фон */
-    --card: #3A4A3F; /* чуть светлее мха для карточек */
-    --text: #E5E7E0; /* известняк — основной текст */
-    --muted: #DCE6DA; /* шалфей — вторичный текст */
-    --border: #4B5D50; /* границы */
-    --accent: #5F7A61; /* хвоя — акцент */
-    --danger: #EF4444; /* можно оставить красный */
+    --bg: #2F3E34;
+    --card: #3A4A3F;
+    --text: #E5E7E0;
+    --muted: #DCE6DA;
+    --border: #4B5D50;
+    --accent: #5F7A61;
+    --danger: #EF4444;
 }
 
 * {
@@ -63,12 +63,18 @@ main {
 }
 
 .badge {
-    display: inline-block;
-    padding: 2px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px 10px;
+    min-height: 26px;
     border-radius: 999px;
     border: 1px solid var(--border);
     color: var(--muted);
     font-size: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 .muted {
@@ -2738,3 +2744,118 @@ body.auth-bg .card {
     }
 }
 
+[hidden] {
+    display: none !important;
+}
+
+.u-inline {
+    display: inline;
+}
+
+.u-mt-0 {
+    margin-top: 0;
+}
+
+.u-mt-4 {
+    margin-top: 4px;
+}
+
+.u-mt-6 {
+    margin-top: 6px;
+}
+
+.u-mt-10 {
+    margin-top: 10px;
+}
+
+.u-mt-12 {
+    margin-top: 12px;
+}
+
+.u-mt-14 {
+    margin-top: 14px;
+}
+
+.u-mt-16 {
+    margin-top: 16px;
+}
+
+.u-mt-18 {
+    margin-top: 18px;
+}
+
+.u-my-10-14 {
+    margin: 10px 0 14px;
+}
+
+.u-p-12 {
+    padding: 12px;
+}
+
+.u-p-14 {
+    padding: 14px;
+}
+
+.u-max-w-360 {
+    max-width: 360px;
+}
+
+.u-max-w-520 {
+    max-width: 520px;
+}
+
+.u-radius-12 {
+    border-radius: 12px;
+}
+
+.u-grid {
+    display: grid;
+}
+
+.u-grid-gap-10 {
+    gap: 10px;
+}
+
+.u-grid-gap-12 {
+    gap: 12px;
+}
+
+.u-flex {
+    display: flex;
+}
+
+.u-flex-wrap {
+    flex-wrap: wrap;
+}
+
+.u-gap-10 {
+    gap: 10px;
+}
+
+.u-gap-12 {
+    gap: 12px;
+}
+
+.u-items-center {
+    align-items: center;
+}
+
+.u-items-start {
+    align-items: flex-start;
+}
+
+.u-justify-between {
+    justify-content: space-between;
+}
+
+.u-font-700 {
+    font-weight: 700;
+}
+
+.u-font-800 {
+    font-weight: 800;
+}
+
+.u-no-decoration {
+    text-decoration: none;
+}

@@ -15,15 +15,12 @@ public interface CareEventRepository extends JpaRepository<CareEvent, Long> {
     @EntityGraph(attributePaths = {"userPlant"})
     List<CareEvent> findTop10ByUserPlant_IdOrderByEventTimeDesc(Long userPlantId);
 
-    /** Этап 8 (P0): REST CRUD — выборка событий текущего пользователя */
     @EntityGraph(attributePaths = {"userPlant"})
     List<CareEvent> findAllByUserPlant_User_IdOrderByEventTimeDesc(Long userId);
 
-    /** Этап 8 (P0): REST CRUD — выборка по растению (принадлежит пользователю) */
     @EntityGraph(attributePaths = {"userPlant"})
     List<CareEvent> findAllByUserPlant_IdAndUserPlant_User_IdOrderByEventTimeDesc(Long userPlantId, Long userId);
 
-    /** Этап 8 (P0): REST CRUD — доступ к событию только владельцу растения */
     @EntityGraph(attributePaths = {"userPlant"})
     Optional<CareEvent> findByIdAndUserPlant_User_Id(Long id, Long userId);
 }

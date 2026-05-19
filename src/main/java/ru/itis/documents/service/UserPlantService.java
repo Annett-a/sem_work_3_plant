@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.documents.domain.entity.*;
-import ru.itis.documents.dto.view.SelectOptionView;
-import ru.itis.documents.dto.view.UserPlantCardView;
-import ru.itis.documents.dto.view.UserPlantDetailsView;
+import ru.itis.documents.dto.view.*;
 import ru.itis.documents.form.UserPlantCreateForm;
 import ru.itis.documents.form.UserPlantUpdateForm;
 import ru.itis.documents.repository.*;
@@ -14,7 +12,12 @@ import ru.itis.documents.repository.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

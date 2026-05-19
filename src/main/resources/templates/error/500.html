@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('500 — Ошибка сервера', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge">500</span>
+        <h1 class="error-page__title">Ошибка сервера</h1>
+        <p class="muted error-page__subtitle">
+            Что-то пошло не так при обработке запроса:
+            <span th:text="${path}">/</span>
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Попробуйте обновить страницу. Если ошибка повторяется, это будет исправлено после проверки логов.
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+            <a class="btn"
+               th:href="${backUrl != null and !#strings.isEmpty(backUrl) ? backUrl : '/'}">Назад</a>
+        </div>
+    </section>
+</main>
+
+</html>

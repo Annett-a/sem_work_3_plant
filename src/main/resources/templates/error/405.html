@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('405 — Метод не поддерживается', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge">405</span>
+        <h1 class="error-page__title">Метод не поддерживается</h1>
+        <p class="muted error-page__subtitle">
+            Для адреса
+            <span th:text="${path}">/</span>
+            использован неподходящий HTTP-метод.
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Доступные методы:
+            <span th:text="${supportedMethods != null and !#lists.isEmpty(supportedMethods) ? #strings.listJoin(supportedMethods, ', ') : 'не указаны'}">
+                GET, POST
+            </span>
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+            <a class="btn"
+               th:href="${backUrl != null and !#strings.isEmpty(backUrl) ? backUrl : '/'}">Назад</a>
+        </div>
+    </section>
+</main>
+
+</html>

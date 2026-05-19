@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import ru.itis.documents.domain.entity.AppUser;
 import ru.itis.documents.domain.entity.IdentificationCandidate;
 import ru.itis.documents.domain.entity.PlantIdentification;
@@ -16,10 +18,10 @@ import ru.itis.documents.integration.plantnet.PlantNetClient;
 import ru.itis.documents.repository.AppUserRepository;
 import ru.itis.documents.repository.PlantIdentificationRepository;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Service
 public class PlantIdentificationService {

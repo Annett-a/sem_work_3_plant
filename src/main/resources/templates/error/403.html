@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('403 — Доступ запрещён', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge">403</span>
+        <h1 class="error-page__title">Доступ запрещён</h1>
+        <p class="muted error-page__subtitle">
+            Нет прав для просмотра этой страницы:
+            <span th:text="${path}">/</span>
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Если кажется, что это ошибка, нужно войти под другой ролью или обратиться к администратору.
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+            <a class="btn"
+               th:href="${backUrl != null and !#strings.isEmpty(backUrl) ? backUrl : '/'}">Назад</a>
+        </div>
+    </section>
+</main>
+
+</html>

@@ -16,6 +16,9 @@
             <div sec:authorize="isAnonymous()" class="hero-actions">
                 <a class="btn btn-primary" th:href="@{/auth/register}">Создать аккаунт</a>
                 <a class="btn btn-ghost" th:href="@{/auth/login}">Войти</a>
+                <a class="btn btn-ghost"
+                   th:if="${googleOAuthReady}"
+                   th:href="@{/auth/oauth/google}">Войти через Google</a>
             </div>
 
             <div sec:authorize="isAuthenticated()" class="hero-actions">

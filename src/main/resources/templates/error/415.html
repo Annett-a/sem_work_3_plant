@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/base :: layout('415 — Неподдерживаемый тип содержимого', '', ~{::main})}">
+
+<main class="container error-page">
+    <section class="card error-hero">
+        <span class="badge error-hero__badge">415</span>
+        <h1 class="error-page__title">Неподдерживаемый тип содержимого</h1>
+        <p class="muted error-page__subtitle">
+            Сервер не может обработать тело запроса для:
+            <span th:text="${path}">/</span>
+        </p>
+    </section>
+
+    <section class="card error-card">
+        <p class="muted error-card__text">
+            Получен Content-Type:
+            <span th:text="${receivedContentType != null ? receivedContentType : 'не указан'}">application/xml</span>
+        </p>
+
+        <p class="muted error-card__text">
+            Поддерживаются:
+            <span th:text="${supportedMediaTypes != null and !#lists.isEmpty(supportedMediaTypes) ? #strings.listJoin(supportedMediaTypes, ', ') : 'не указано'}">
+                application/json
+            </span>
+        </p>
+
+        <div class="error-actions">
+            <a class="btn btn-primary" th:href="@{/}">На главную</a>
+            <a class="btn"
+               th:href="${backUrl != null and !#strings.isEmpty(backUrl) ? backUrl : '/'}">Назад</a>
+        </div>
+    </section>
+</main>
+
+</html>

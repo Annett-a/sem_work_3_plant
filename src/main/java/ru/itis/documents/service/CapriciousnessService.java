@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.itis.documents.domain.entity.CareProfile;
 import ru.itis.documents.domain.entity.PlantSpecies;
 import ru.itis.documents.domain.entity.Tag;
+import ru.itis.documents.dto.view.CapriciousnessView;
 
 import java.util.ArrayList;
 import java.util.List;

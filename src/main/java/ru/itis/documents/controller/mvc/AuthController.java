@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.itis.documents.dto.RegisterForm;
 import ru.itis.documents.integration.google.GoogleOidcClient;
-import ru.itis.documents.integration.google.GoogleOidcProperties;
 import ru.itis.documents.security.ManualAuthenticationService;
 import ru.itis.documents.service.AuthService;
+import ru.itis.documents.integration.google.GoogleOidcProperties;
 
 @Controller
 @RequestMapping("/auth")
